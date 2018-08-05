@@ -1,0 +1,73 @@
+
+
+<div class="form-group row">
+    <div class="col-6">
+    <div class="silk-card border-primary">
+         <div class="silk-card">
+                <div class="silk-card-title">
+                    <div class="silk-head">
+                        <div class="silk-pre">
+                            <h4>شجرة القوائم</h4>
+                        </div>
+                    </div>
+                </div>
+                <div class="silk-card-content">
+            <div class="row">
+              <div class="col-12">
+                <div class="form-group">
+		    <p-tree [value]="filesTree2" selectionMode="multiple" [(selection)]="selectedFiles"
+			(onNodeSelect)="nodeSelect($event)" (onNodeUnselect)="nodeUnselect($event)"></p-tree>
+		    <div>الفئة المختارة :<span *ngFor="let file of selectedFiles">{{file.label}}</span></div>
+                </div>
+                </div>
+                      </div>
+                   </div>
+                </div>
+         </div>
+      </div>
+    <div class="col-6">
+        <div class="silk-card border-primary">
+            <div class="silk-card">
+                <div class="silk-card-title">
+                    <div class="silk-head">
+                        <div class="silk-pre">
+                            <h4> اضافة الفئات</h4>
+                        </div>
+                    </div>
+                    <md-divider></md-divider>
+                </div>
+                <div class="silk-card-content">
+                    <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                        <div class="form-group row">
+                            <label for="example-url-input" class="col-2 col-form-label">اسم الفئة </label>
+                            <div class="col-8">
+                                <input class="form-control" type="text" [formControl]="form.controls['description']"  id="example-url-input">
+                                <small class="silk-block" *ngIf="form.controls['description'].hasError('required') && form.controls['description'].touched" class="mat-text-warn">
+                                        You must include a descrption.
+                                    </small>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-2 col-form-label"> رمز الفئة الرئيسي</label>
+                            <div class="col-8">
+                                <ngx-dropdown-treeview-select [items]="items"  (valueChange)="onValueChange($event)">
+                                </ngx-dropdown-treeview-select>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <input class="form-control" type="text" hidden="true" [formControl]="form.controls['partyId']" [(ngModel)]="partyId" id="example-url-input">
+                            <input class="form-control" type="text" hidden="true" [formControl]="form.controls['parentCategoryId']" [(ngModel)]="parentCategoryId" id="example-url-input">
+        
+                            <div class="col-12">
+                                <!-- <button class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow" [disabled]="!form.valid" type="submit"> -->
+                                <button md-button  [disabled]="!form.valid" type="submit">
+                                    اضافة
+                                </button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+        
+            </div>
+        </div>
+    </div>

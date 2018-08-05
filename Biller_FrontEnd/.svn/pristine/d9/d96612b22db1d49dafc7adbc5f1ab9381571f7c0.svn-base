@@ -1,0 +1,37 @@
+{
+    "data": 
+    [
+        {
+            "label": "Accounting",
+            "data": "Documents Folder",
+            "expandedIcon": "fa-folder-open",
+            "collapsedIcon": "fa-folder",
+            "children": [{
+                    "label": "AP",
+                    "data": "Work Folder",
+	            "icon": "fa-file-image-o"}]
+        },
+        {
+            "label": "HR",
+            "data": "Pictures Folder",
+            "expandedIcon": "fa-folder-open",
+            "collapsedIcon": "fa-folder"
+        },
+        {
+            "label": "Portal",
+            "data": "Movies Folder",
+            "expandedIcon": "fa-folder-open",
+            "collapsedIcon": "fa-folder",
+            "children": [{
+                    "label": "My Leave",
+                    "data": "Pacino Movies",
+                    "children": [{"label": "Scarface", "icon": "fa-file-video-o", "data": "Scarface Movie"}, {"label": "Serpico", "icon": "fa-file-video-o", "data": "Serpico Movie"}]
+                },
+                {
+                    "label": "My Training",
+                    "data": "De Niro Movies",
+                    "children": [{"label": "Goodfellas", "icon": "fa-file-video-o", "data": "Goodfellas Movie"}, {"label": "Untouchables", "icon": "fa-file-video-o", "data": "Untouchables Movie"}]
+                }]
+        }
+    ]
+}

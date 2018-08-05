@@ -1,0 +1,26 @@
+.dropdown {
+    width: 100%;
+    display: inline-block;
+    button {
+        width: 100%;
+        left: 1.2rem;
+        text-align: left;
+	margin-right: 0rem;
+	background-color: #ff408100;
+	width: 96.5% !important;
+	text-align: inherit;
+	font-size: 0.875rem;
+        &::after {
+            position: absolute;
+            right: 92% ;
+            margin-top: 0.5rem;
+        }
+    }
+    .dropdown-menu {
+        .dropdown-container {
+            padding: 0 .6rem;
+        }
+    }
+}
+
+

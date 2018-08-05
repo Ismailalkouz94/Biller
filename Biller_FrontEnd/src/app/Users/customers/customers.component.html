@@ -1,0 +1,157 @@
+<!-- <div class="silk-card border-primary">
+<div class="silk-card">
+<div class="customers view indent">
+    <div class="container">
+        <header>
+            <h3>
+                <span class="glyphicon glyphicon-user"></span>
+                {{ title }}
+            </h3>
+        </header>
+        <br />
+        <div class="row">
+            <div class="col-md-10">
+          <ng-template #content let-c="close" let-d="dismiss">
+               <div class="modal-header">
+                  <h4 class="modal-title">Modal title</h4>
+                  <button type="button" class="close" aria-label="Close" (click)="d('Cross click')">
+                  <span aria-hidden="true">&times;</span>
+                  </button>
+               </div>
+               <div class="modal-body">
+		    <form [formGroup]="form">
+
+			<div class="row">
+			    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<md-input-container class="full-wid">
+				    <input mdInput placeholder="First name" [formControl]="form.controls['fname']">
+				</md-input-container>
+				<small class="silk-block" *ngIf="form.controls['fname'].hasError('required') && form.controls['fname'].touched" class="mat-text-warn">
+						    You must include a first name.
+					    </small>
+				<small class="silk-block" *ngIf="form.controls['fname'].hasError('minlength') && form.controls['fname'].touched" class="mat-text-warn">
+						    Your first name must be at least 5 characters long.
+					    </small>
+				<small class="silk-block" *ngIf="form.controls['fname'].hasError('maxlength') && form.controls['fname'].touched" class="mat-text-warn">
+						    Your first name cannot exceed 10 characters.
+					    </small>
+			    </div>
+
+
+			    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<md-input-container class="full-wid">
+				    <input mdInput placeholder="Email address" [formControl]="form.controls['email']" type="email">
+				</md-input-container>
+				<small class="silk-block" *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched" class="mat-text-warn">
+					    You must include an email address.
+				    </small>
+				<small class="silk-block" *ngIf="form.controls['email'].errors && !(form.controls['email'].hasError('required')) && form.controls['email'].touched" class="mat-text-warn">
+					    You must include a valid email address.
+				    </small>
+			    </div>
+			</div>
+			<div class="row">
+			    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<md-input-container class="full-wid">
+				    <input mdInput placeholder="Phone number (15417543010)" [formControl]="form.controls['phone']" type="text">
+				</md-input-container>
+				<small class="silk-block" *ngIf="form.controls['phone'].hasError('required') && form.controls['phone'].touched" class="mat-text-warn">
+					    You must include phone number.
+				    </small>
+				<small class="silk-block" *ngIf="form.controls['phone'].errors && !(form.controls['phone'].hasError('required')) && form.controls['phone'].touched" class="mat-text-warn">
+					    You must include a valid phone number.
+				    </small>
+			    </div>
+
+			    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<md-input-container class="full-wid">
+				    <input mdInput placeholder="Password" [formControl]="form.controls['password']" type="password">
+				</md-input-container>
+				<small class="silk-block" *ngIf="form.controls['password'].hasError('required') && form.controls['password'].touched" class="mat-text-warn">
+					    You must include password.
+				    </small>
+			    </div>
+			</div>
+			<div class="row">
+			    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12">
+				<md-input-container class="full-wid">
+				    <input mdInput placeholder="Confirm Password" [formControl]="form.controls['confirmPassword']" type="password">
+				</md-input-container>
+				<small class="silk-block" *ngIf="form.controls['confirmPassword'].hasError('required') && form.controls['confirmPassword'].touched" class="mat-text-warn">
+					    You must include confirm password.
+				    </small>
+				<small class="silk-block" *ngIf="form.controls['confirmPassword'].errors && (form.controls['confirmPassword'].hasError('required'))" class="mat-text-warn">
+					    Passwords do not match.
+				    </small>
+			    </div>
+
+
+			</div>
+			<div>
+			    <md-card-actions>
+				<button md-raised-button color="primary" type="submit" [disabled]="!form.valid">Submit</button>
+			    </md-card-actions>
+			</div>
+		    </form>
+               </div>
+               <div class="modal-footer">
+                  <button type="button" class="btn btn-secondary" (click)="c('Close click')">Close</button>
+               </div>
+            </ng-template>
+                <div class="navbar">
+                    <ul class="nav">
+                        <li class="toolbar-item">
+                            <a (click)="changeDisplayMode(displayModeEnum.Card)" [class.active]="displayMode === displayModeEnum.Card">
+                                <span class="glyphicon glyphicon-th-large"></span> عرض كبطاقات
+                            </a>
+                        </li>
+                        <li class="toolbar-item">
+                            <a (click)="changeDisplayMode(displayModeEnum.Grid)" [class.active]="displayMode === displayModeEnum.Grid">
+                                <span class="glyphicon glyphicon-align-justify"></span> عرض كقائمة
+                            </a>
+                        </li>
+                        <li class="toolbar-item">
+                            <a (click)="changeDisplayMode(displayModeEnum.Map)" [class.active]="displayMode === displayModeEnum.Map">
+                                <span class="glyphicon glyphicon-map-marker"></span> عرض الخريطة
+                            </a>
+                        </li>
+                        <li class="toolbar-item">
+                            <a (click)="open(content)">
+                                <span class="glyphicon glyphicon-plus"></span> اضافة مستخدم جديد
+                            </a>
+                        </li>
+                    </ul>
+                    <cm-filter-textbox class="navbar-right"
+                     (changed)="filterChanged($event)"></cm-filter-textbox>
+                </div>
+            </div>
+        </div>
+        
+        <cm-customers-card 
+          [customers]="filteredCustomers" 
+          [hidden]="displayMode !== displayModeEnum.Card"></cm-customers-card>
+    
+        <cm-customers-grid 
+          [customers]="filteredCustomers" 
+          [hidden]="displayMode !== displayModeEnum.Grid"></cm-customers-grid>
+
+        <!-- <cm-map *ngIf="filteredCustomers.length" 
+            [zoom]="2" 
+            [enabled]="displayMode === displayModeEnum.Map" 
+            [hidden]="displayMode !== displayModeEnum.Map">
+          <cm-map-point 
+            *ngFor="let customer of filteredCustomers" 
+            [latitude]="customer.latitude" 
+            [longitude]="customer.longitude"
+            [markerText]="'<h3>' + customer.firstName + ' ' + customer.lastName + '</a></h3>' + customer.city + ', ' + customer.state.name"></cm-map-point>
+        </cm-map> -->
+
+        <!-- <cm-pagination
+            [totalItems]="totalRecords" 
+            [pageSize]="pageSize" 
+            (pageChanged)="pageChanged($event)"></cm-pagination>
+          
+    </div>
+</div>
+</div>
+</div>  -->

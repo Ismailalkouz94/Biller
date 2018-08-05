@@ -1,0 +1,129 @@
+<div class="silk-card border-primary">
+	<div class="silk-card">
+		<div class="silk-card-title">
+			<div class="silk-head">
+				<div class="silk-pre">
+					<h4> استعلام الطلبات المستلمه </h4>
+
+
+					<md-divider>
+
+					</md-divider>
+				</div>
+			</div>
+			<div class="silk-card-content">
+				<!-- <button type="button" class="btn waves-effect waves-light gradient-45deg-amber-amber gradient-shadow" >مشاهدة</button> -->
+
+
+				<form [formGroup]="form" (ngSubmit)="findByCriteria(form.value)">
+
+					<div class="form-group row">
+						<label for="example-search-input" class="col-2 col-form-label">
+							رقم الطلب
+						</label>
+						<div class="col-4">
+							<input class="form-control" type="text" [formControl]="form.controls['orderId']">
+						</div>
+						<label for="example-search-input" class="col-2 col-form-label">
+							اسم الطلب
+						</label>
+						<div class="col-4">
+							<input class="form-control" type="text" [formControl]="form.controls['name']">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="example-email-input" class="col-2 col-form-label">
+							الوصف
+						</label>
+						<div class="col-4">
+							<input class="form-control" type="text" [formControl]="form.controls['description']">
+						</div>
+						<label for="example-email-input" class="col-2 col-form-label">
+							حالة الطلب </label>
+						<div class="col-4">
+							<select class="form-control" [formControl]="form.controls['globalItemId']">
+								<option [ngValue]="null"> </option>
+								<option  *ngFor="let status of orderStatuslist"  [ngValue]="status.globalItemId" >
+									{{status.description}}
+								</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group row">
+
+						<label for="example-email-input" class="col-2 col-form-label">
+							من </label>
+						<div class="col-4">
+							<select class="form-control" [formControl]="form.controls['fromPartyId']">
+								<option [ngValue]="null"> </option>
+								<option *ngFor="let party of fromPartyList" [ngValue]="party[0]">{{party[1]}}</option>
+							</select>
+
+						</div>
+						<input class="form-control" hidden="true" type="text" [formControl]="form.controls['toPartyId']" id="example-email-input">
+
+						<label for="example-email-input" class="col-2 col-form-label">
+							تاريخ الطلب </label>
+						<div class="col-4">
+							<input class="form-control" type="date" [formControl]="form.controls['orderDate']" id="example-email-input">
+
+
+						</div>
+
+					</div>
+					<div class="form-group row">
+						<div class="col-12">
+							<button class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow" type="submit">
+								بحث
+							</button>
+
+						</div>
+					</div>
+
+				</form>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-2" widget>
+					<div class="silk-card-content widget-body">
+						<ngx-table [configuration]="configurationAdvanced" [data]="ordersList" [columns]="columns">
+							<ng-template let-order>
+								<ng-container *ngIf="order.globalItem.globalItemId != 'CREATED'">
+									<th scope="row">
+										<a routerLink="/order/order-orderReceived" (click)="view(order)">{{order.orderId}} </a>
+									</th>
+									<td>{{order.name}}</td>
+									<td>{{order.description}} </td>
+									<td *ngIf="order.globalItem.globalItemId == 'SENT'"> Received</td>
+									<td *ngIf="order.globalItem.globalItemId != 'SENT'"> {{order.globalItem.description}}</td>
+									<td> {{order.fromParty.partyGroup.tradeName}}</td>
+									<td> {{order.orderDate | date: 'dd/MM/yyyy'}}</td>
+									<td>{{totalPrice(order.orderItems)}}</td>
+									<td>
+										<!-- <button type="button" class="btn waves-effect waves-light gradient-45deg-green-teal gradient-shadow" (click)="view(order.orderId)">
+									عرض</button> -->
+										<md-icon *ngIf="order.globalItem.globalItemId != 'CONFIRMATION' && order.globalItem.globalItemId != 'CANCELED' && order.globalItem.globalItemId != 'COMPLETED'"
+										 (click)="edit(order.orderId)" mdTooltip="edit">edit</md-icon>
+
+										<md-icon *ngIf="order.globalItem.globalItemId == 'SENT'" mdTooltip="intial received" (click)="changeToInitialReceived(order.orderId)">filter_1</md-icon>
+										<!-- <button *ngIf="order.globalItem.globalItemId != 'CANCELED'  && order.globalItem.globalItemId != 'FINAL_CONFIRMATION'" type="button" class="waves-effect waves-light btn gradient-45deg-light-red box-shadow" (click)="changeToFinalConfirmation(order.orderId)">Final Confirm</button> -->
+										<!-- <button *ngIf="order.globalItem.globalItemId != 'CONFIRMATION' && order.globalItem.globalItemId != 'CANCELED' && order.globalItem.globalItemId != 'COMPLETED'" type="button" class="waves-effect waves-light btn gradient-45deg-green-teal box-shadow" (click)="changeToFinalConfirm(order.orderId)">Confirm</button> -->
+										<md-icon *ngIf="order.globalItem.globalItemId != 'CONFIRMATION' && order.globalItem.globalItemId != 'CANCELED' && order.globalItem.globalItemId != 'COMPLETED'"
+										 (click)="changeToFinalConfirm(order.orderId)" mdTooltip="Confirm">done_all</md-icon>
+										<md-icon *ngIf="order.globalItem.globalItemId == 'COMPLETED'" mdTooltip="print" (click)="invoice(order.orderId)">print</md-icon>
+
+										<!-- <md-icon *ngIf="order.globalItem.globalItemId == 'COMPLETED'" mdTooltip="تفصيلي" (click)="orderDetailReport(order.orderId)">line_style</md-icon>
+								<md-icon *ngIf="order.globalItem.globalItemId == 'COMPLETED'" mdTooltip="اجمالي" (click)="orderTotalReport(order.orderId)">line_weight</md-icon> -->
+										<md-icon *ngIf="order.globalItem.globalItemId == 'COMPLETED'" mdTooltip="نموذج استلام" (click)="deliveryNoteReport(order.orderId)">line_style</md-icon>
+
+									</td>
+								</ng-container>
+							</ng-template>
+						</ngx-table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

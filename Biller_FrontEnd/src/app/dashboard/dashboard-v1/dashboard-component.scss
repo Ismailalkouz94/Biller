@@ -1,0 +1,21 @@
+
+.ngx-charts{
+        direction: initial;
+}
+
+// .pie-label{
+//  display: contents;
+// }]
+.pie-chart {
+        display: flex;  
+}
+
+
+.legend-labels{
+ width: fit-content !important;
+}
+
+.chart-legend .legend-labels {
+text-align: right !important;
+float: right !important;
+}

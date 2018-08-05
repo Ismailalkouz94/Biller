@@ -1,0 +1,188 @@
+<div class="silk-card border-primary">
+	<div class="silk-card">
+		<div class="silk-card-title">
+			<div class="silk-head">
+				<div class="silk-pre">
+					<h4>اطراف </h4>
+					<!-- <a routerLink="/notifications"><button type="button" class="btn waves-effect waves-light gradient-45deg-green-teal gradient-shadow">الى مفوترين</button> </a>
+					<a routerLink="/toCustomres"><button type="button" class="btn waves-effect waves-light gradient-45deg-green-teal gradient-shadow">  الى افراد</button> </a> -->
+
+					<md-divider></md-divider>
+				</div>
+			</div>
+		
+					   <div class="silk-card-content">
+							<tabset>
+
+									<tab heading="إلى الشركات" (select)="goToLink('/notifications')">
+
+								</tab>
+
+									<tab heading="إلى الأفراد" [active]="true">
+						  <form [formGroup]="form" (ngSubmit)="search(form.value)">
+   
+		   
+						
+						   <div class="form-group row">
+					   <label for="example-search-input" class="col-2 col-form-label"> اسم المشترك</label>
+					   <div class="col-4">
+						   <input class="form-control"  [formControl]="form.controls['name']" type="text" >
+					   </div>
+					   <label for="example-url-input"  class="col-2 col-form-label">  الرقم الوطني  </label>
+					   <div class="col-4">
+						   <input class="form-control" [formControl]="form.controls['nationalNumber']"  type="text" >
+					   </div>
+				
+						   </div>							
+						   <div class="form-group row">
+								<label for="example-url-input"  class="col-2 col-form-label">  رقم الأشتراك </label>
+								<div class="col-4">
+									<input class="form-control" [formControl]="form.controls['referenceNumber']"  type="text" >
+								</div>
+
+					   <label for="example-search-input" class="col-2 col-form-label">   الجنس </label>
+					   <div class="col-4">
+						   <select class="form-control" [formControl]="form.controls['gender']" [(ngModel)]="selecteType">
+							<option value="ALL">الكل</option>
+							<option value="M">ذكر</option>
+							<option value="F">انثى </option>
+
+						</select>
+						</div>
+					
+					  
+					   </div>
+					   <!-- <div class="form-group row">
+					   <label for="example-url-input"  class="col-2 col-form-label">  العمر</label>
+					   <div class="col-4">
+						   <input class="form-control" [formControl]="form.controls['commericalRegistrationNum']"  type="text"  id="example-url-input">
+					   </div>
+					
+					   <label for="example-number-input" class="col-2 col-form-label"> تاريخ الإشتراك</label>
+					   <div class="col-4">
+					   <input class="form-control" [formControl]="form.controls['partySize']"  type="text"  id="example-number-input">
+					   </div>
+						   </div> -->
+					
+						   <div class="form-group row">
+
+							<label for="example-email-input" class="col-2 col-form-label">
+								الدولة  </label>
+							<div class="col-4">
+								<select class="form-control" [(ngModel)]="countryId"  [formControl]="form.controls['countryId']" (change)="getCities(countryId)">
+									<option *ngFor="let item of countryList" [ngValue]="item.countryId">{{item.description}}</option>
+								</select>
+							
+							</div>
+
+							<label for="example-email-input" class="col-2 col-form-label">
+								 المدينة </label>
+							<div class="col-4">
+									<ngx-dropdown-treeview [items]="cityList | ngxTreeview:'description'" [buttonClass]="'btn-outline-primary'" (selectedChange)="onSelectedChange_Cities($event)">
+										</ngx-dropdown-treeview>
+							
+							</div>
+							</div>
+						   <div class="form-group row">
+					   <div class="col-12">
+								   <button class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow" type="submit"> بحث</button>
+					   </div>
+						   </div>
+					  </form>
+					
+					
+					</tab>
+				</tabset>
+				<div class="form-group row">
+						<div class="col-4">
+							<button class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow" (click)="sendToALL()"  type="button">
+							ارسال للأفراد المحددين</button>
+
+						</div>
+					</div>
+				 
+				
+		
+				   <div class="form-group row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-2" widget>
+	
+						<div class="silk-card-content widget-body">
+	
+							<ngx-table
+							[configuration]="configurationAdvanced"
+							[data]="personList"
+							[columns]="columns">                 
+							<ng-template let-rowData>
+							   
+								<td scope="row">
+									<span class="spanWidth">
+										{{rowData.name}}
+									</span>
+								</td>
+								<td>{{rowData.nationalNumber}}</td>
+								<td>{{rowData.referenceNumber}} </td>
+								<td>{{rowData.gender}} </td>
+								<td>{{rowData.countryDesc}} </td>
+								<td>{{rowData.cityDesc}} </td>
+								<td *ngIf="rowData.partyType=='PERSON'">افراد </td>
+								<td *ngIf="rowData.partyType=='PARTY_GROUP'">شركات </td>
+								
+										<td>
+										<md-icon mdTooltip="ارسال اشعار" (click)="sendToOneUser(rowData.userLoginId)">notifications_active</md-icon>
+
+	
+								</td>
+								</ng-template>
+						  </ngx-table>
+						</div>
+	
+					</div>
+					</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<div ngDraggable [@dialog] class="modal-dialog" *ngIf="showDialog">
+		<div class="modal-dialog" role="document" style="max-width: 522px;">
+			<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" aria-label="Close" (click)="showDialog = !showDialog;form.get('message').setValue('')"><span aria-hidden="true">&times;</span></button>
+				<h4 class="modal-title">ارسال رسالة</h4>
+			</div>
+			<div class="modal-body">
+			 <div class="silk-card-content widget-body" style="max-width: 522px;">
+				   <div class="ui-dialog-buttonpane ui-dialog-footer ui-widget-content ui-helper-clearfix" style="padding:0;width: 100%;">
+					   <textarea cols="25" rows="9" maxlength="150" class="form-control" 
+					   	   [formControl]="form.controls['message']"></textarea>
+					   <span id="formm:display">عدد الأحرف لا يتجاوز 150 حرف</span><br/>
+					   <md-icon class="md-fab md-primary md-button md-ink-ripple btn-warn" (click)="openConfirmationDialog()" mdTooltip="ارسال اشعار">notifications_active
+											   <!-- <span class="ui-button-text ui-c ">إشعار</span> -->
+					   </md-icon>
+					   <!-- <button>
+						   <span class="ui-button-text ui-c"> -->
+							   <md-icon class="md-fab md-primary md-button md-ink-ripple btn-blue" mdTooltip=" بريد الكتروني">email</md-icon>
+							   <!-- بريد الكتورني -->
+						   <!-- </span> -->
+					   <!-- </button> -->
+					   <!-- <button>
+						   <span class="ui-button-text ui-c"> -->
+							   <!-- <md-icon>perm_phone_msg</md-icon> -->
+							   
+							   <md-icon class="md-fab md-primary md-button md-ink-ripple btn-pink" mdTooltip="  رسالة هاتف نصية">message</md-icon> 
+							   <!-- رسالة هاتف</span>
+					   </button> -->
+					   <!-- <button>
+						   <span class="ui-button-text ui-c "><i class="fab fa-whatsapp"></i>واتس اب</span>
+					   </button> -->
+   
+					   <md-icon class="md-fab md-primary md-button md-ink-ripple btn-green" mdTooltip="WhatsApp">perm_phone_msg</md-icon>
+				   </div>
+			   </div>
+				</div>		 
+			<!-- <div class="modal-footer">
+				   <button (click)="showDialog = !showDialog" class="btn">Close</button>
+			</div> -->
+			</div>
+		   </div>
+		</div>

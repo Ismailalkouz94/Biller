@@ -1,0 +1,201 @@
+<div class="silk-card border-primary">
+	<div class="silk-card">
+		<div class="silk-card-title">
+			<div class="silk-head">
+				<div class="silk-pre">
+					<h4> اضافة المنتجات لفاتورة رقم {{invoiceId}}</h4>
+				</div>
+			</div>
+
+
+			<a routerLink="/invoice/update-invoice">
+				<button type="button"  id="header" class="btn waves-effect waves-light gradient-45deg-green-teal gradient-shadow">التفاصيل</button>
+			</a>
+			<a routerLink="/invoice/add-invoiceItem">
+				<button type="button" id="item" class="btn waves-effect waves-light gradient-45deg-amber-amber gradient-shadow">المنتجات</button>
+			</a>
+		
+
+			<md-divider></md-divider>
+		</div>
+		<div class="silk-card-content">
+			<form [formGroup]="form" (ngSubmit)="onSubmit()">
+				<div class="form-group row">
+
+					<input class="form-control" hidden="true" type="text" [(ngModel)]="invoiceItemId" [formControl]="form.controls['invoiceItemId']" >
+
+
+					<label for="example-search-input" class="col-2 col-form-label">
+						الوصف
+					</label>
+
+					<div class="col-4">
+						<input class="form-control" type="text"  [(ngModel)]="description" [formControl]="form.controls['description']" placeholder="">
+						<small class="silk-block" *ngIf="form.controls['description'].hasError('required') && form.controls['description'].touched"
+						 class="mat-text-warn">
+						</small>
+					</div>
+
+
+					<label for="example-email-input" class="col-2 col-form-label">
+						الفئة </label>
+					<div class="col-4">
+						<ngx-dropdown-treeview-select [items]="items"    [(value)]="categoryVal" (valueChange)="onValueChange($event)">
+						</ngx-dropdown-treeview-select>
+						
+					</div>
+
+
+				</div>
+				<div class="form-group row">
+
+					<label for="example-email-input" class="col-2 col-form-label">
+						اسم المنتج </label>
+					<div class="col-4">
+						<select class="form-control" [formControl]="form.controls['itemId']" (change)="getItemUnitPrice()">
+							<option value="null"></option>
+							<option *ngFor="let item of allItems" [ngValue]="item.itemId">{{item.brandName}}</option>
+						</select>
+						<!-- <small class="silk-block" *ngIf="form.controls['categoryId'].hasError('required') && form.controls['categoryId'].touched"
+						 class="mat-text-warn">
+						</small> -->
+					</div>
+
+					<label for="example-email-input" class="col-2 col-form-label">
+						الوحدة </label>
+					<div class="col-4">
+						<select class="form-control"  [formControl]="form.controls['unitId']" (change)="getItemUnitPrice()">
+							<option *ngFor="let unit of units" [ngValue]="unit.unitId">{{unit.name}}</option>
+						</select>
+						<!-- <small class="silk-block" *ngIf="form.controls['unitId'].hasError('required') && form.controls['unitId'].touched" class="mat-text-warn">
+						
+						</small> -->
+					</div>
+
+				</div>
+
+				<div class="form-group row">
+					<label for="example-url-input" class="col-2 col-form-label">
+						الكمية
+					</label>
+					<div class="col-4">
+						<input class="form-control" type="number" [(ngModel)]="quantity" [formControl]="form.controls['quantity']" id="example-url-input">
+						<small class="silk-block" *ngIf="form.controls['quantity'].hasError('required') && form.controls['quantity'].touched" class="mat-text-warn">
+						
+						</small>
+					</div>
+
+
+					<label for="example-email-input" class="col-2 col-form-label">
+						سعر المنتج </label>
+					<div class="col-4">
+						<input class="form-control" type="text" [(ngModel)]="price" [formControl]="form.controls['unitPrice']" id="example-email-input">
+						<small class="silk-block" *ngIf="form.controls['unitPrice'].hasError('required') && form.controls['unitPrice'].touched" class="mat-text-warn">
+				
+						</small>
+					</div>
+
+
+
+				</div>
+
+				<input class="form-control" hidden="true" type="text" [(ngModel)]="userLoginId" [formControl]="form.controls['userLoginId']">
+				<input class="form-control" hidden="true" type="text" [(ngModel)]="invoiceId" [formControl]="form.controls['invoiceId']">
+				<input class="form-control" hidden="true" type="text" [(ngModel)]="categoryId" [formControl]="form.controls['categoryId']">
+
+				<div class="form-group row">
+					<div *ngIf="edit != true" class="col-12">
+						<button class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow" type="submit" [disabled]="!form.valid">
+							اضافة
+						</button>
+
+					</div>
+
+					<div *ngIf="edit" class="col-12">
+						<button class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow" type="submit"  [disabled]="!form.valid" >
+							تعديل
+						</button>
+						<button class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow" (click)="cancel()">
+							الغاء
+						</button>
+
+					</div>
+				</div>
+
+			</form>
+			<div class="form-group row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-2" widget>
+					<div class="silk-card-content widget-body">
+						<table class="table">
+							<thead class="thead-default">
+								<tr>
+									<th>
+										رقم المنتج
+									</th>
+									<th>
+										اسم المنتج
+									</th>
+									<th>
+										الفئة
+									</th>
+
+
+									<th>
+										الوصف
+									</th>
+
+									<th>
+										الوحدة
+									</th>
+									<th>
+										الكمية
+									</th>
+									<th>
+										السعر
+									</th>
+
+									<th>
+										المجموع
+									</th>
+									<th >
+										تعديل
+									</th>
+									<th >
+										حذف
+									</th>
+								</tr>
+							</thead>
+							<tbody *ngFor="let item of invoiceItemsData">
+
+								<tr>
+									<th scope="row">{{item.invoiceItemId}}</th>
+									
+									<td *ngIf="item.item">{{item.item.brandName}}</td>
+                                    <td *ngIf="!item.item">-</td>
+									<td *ngIf="item.category">{{item.category.description}}</td>
+									<td *ngIf="!item.category">-</td>
+									<td>{{item.description}} </td>
+									<td *ngIf="item.unit"> {{item.unit.name}}</td>
+									<td *ngIf="!item.unit"> -</td>
+									<td> {{item.quantity}}</td>
+									<td> {{item.unitPrice}}</td>
+									<td> {{totalPrice(item.quantity,item.unitPrice)}}</td>
+									<td>
+												<button type="button" class="btn waves-effect waves-light gradient-45deg-green-teal gradient-shadow" (click)="doUpdate(item)"> تعديل</button>
+											
+										</td>
+
+									<td>
+										<button type="button"  class="btn waves-effect waves-light gradient-45deg-amber-amber gradient-shadow" (click)="delete(item.invoiceItemId)">حذف</button>
+									</td>
+								</tr>
+
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

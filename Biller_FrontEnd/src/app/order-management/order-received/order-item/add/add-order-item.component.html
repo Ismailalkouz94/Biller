@@ -1,0 +1,202 @@
+<div class="silk-card border-primary">
+	<div class="silk-card">
+		<div class="silk-card-title">
+			<div class="silk-head">
+				<div class="silk-pre">
+					<h4> تعديل المنتجات على طلب رقم ({{orderId}}) </h4>
+				</div>
+			</div>
+
+			<!-- <a routerLink="/order/order-orderReceived">
+				<button type="button" id="header" class="btn waves-effect waves-light gradient-45deg-green-teal gradient-shadow">التفاصيل</button>
+			</a>
+
+			<a>
+				<button type="button" id="item" class="btn waves-effect waves-light gradient-45deg-amber-amber gradient-shadow">المنتجات</button>
+			</a> -->
+
+
+			<md-divider></md-divider>
+		</div>
+		<div class="silk-card-content">
+			<div *ngIf="edit">
+				<form [formGroup]="form" (ngSubmit)="onSubmit()">
+					<div class="form-group row">
+
+						<input class="form-control" hidden="true" type="text" [(ngModel)]="orderItemId" [formControl]="form.controls['orderItemId']">
+
+
+						<!-- <label for="example-search-input" class="col-2 col-form-label">
+							الوصف
+						</label>
+
+						<div class="col-4">
+							<input class="form-control" type="text" [(ngModel)]="description" [formControl]="form.controls['description']" placeholder="">
+							<small class="silk-block" *ngIf="form.controls['description'].hasError('required') && form.controls['description'].touched"
+							 class="mat-text-warn">
+								You must include a description.
+							</small>
+						</div> -->
+
+
+						<label for="example-email-input" class="col-2 col-form-label">
+							الفئة </label>
+						<div class="col-4">
+							<input class="form-control" [(ngModel)]="categoryId" [value]="categoryIdDesc" [formControl]="form.controls['categoryId']"
+							 disabled="true">
+
+							<small class="silk-block" *ngIf="form.controls['categoryId'].hasError('required') && form.controls['categoryId'].touched"
+							 class="mat-text-warn">
+								You must include a category Id.
+							</small>
+						</div>
+
+
+					</div>
+					<div class="form-group row">
+
+						<label for="example-email-input" class="col-2 col-form-label">
+							اسم المنتج </label>
+						<div class="col-4">
+							<input class="form-control" [(ngModel)]="itemId" [value]="itemIdDesc" [formControl]="form.controls['itemId']" disabled="true"
+							 (ngModelChange)="getItemUnitPrice()">
+							<small class="silk-block" *ngIf="form.controls['categoryId'].hasError('required') && form.controls['categoryId'].touched"
+							 class="mat-text-warn">
+								You must include a category Id.
+							</small>
+						</div>
+
+						<label for="example-email-input" class="col-2 col-form-label">
+							الوحدة </label>
+						<div class="col-4">
+							<input class="form-control" disabled="true" [(ngModel)]="unitId" [value]="unitIdDesc" [formControl]="form.controls['unitId']"
+							 (ngModelChange)="getItemUnitPrice()">
+
+							<small class="silk-block" *ngIf="form.controls['unitId'].hasError('required') && form.controls['unitId'].touched" class="mat-text-warn">
+								You must include a category Id.
+							</small>
+						</div>
+
+					</div>
+
+					<div class="form-group row">
+						<label for="example-url-input" class="col-2 col-form-label">
+							الكمية
+						</label>
+						<div class="col-4">
+							<input class="form-control" type="number" [(ngModel)]="quantity" [formControl]="form.controls['quantity']" id="example-url-input">
+							<small class="silk-block" *ngIf="form.controls['quantity'].hasError('required') && form.controls['quantity'].touched" class="mat-text-warn">
+								You must include a quantity.
+							</small>
+						</div>
+
+
+						<label for="example-email-input" class="col-2 col-form-label">
+							سعر المنتج </label>
+						<div class="col-4">
+							<input class="form-control" type="text" disabled="true" [(ngModel)]="price" [formControl]="form.controls['unitPrice']" id="example-email-input">
+							<small class="silk-block" *ngIf="form.controls['unitPrice'].hasError('required') && form.controls['unitPrice'].touched" class="mat-text-warn">
+								You must include a Unit Price.
+							</small>
+						</div>
+
+
+
+					</div>
+
+					<input class="form-control" hidden="true" type="text" [(ngModel)]="userLoginId" [formControl]="form.controls['userLoginId']">
+					<input class="form-control" hidden="true" type="text" [(ngModel)]="orderId" [formControl]="form.controls['orderId']">
+
+					<div class="form-group row">
+
+
+						<div class="col-12">
+							<button class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow" type="submit">
+									اضافه
+							</button>
+
+							<button class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow" (click)="cancel()">
+								الغاء
+							</button>
+
+						</div>
+					</div>
+
+				</form>
+			</div>
+			<div class="form-group row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-2" widget>
+					<div class="silk-card-content widget-body">
+						<table class="table">
+							<thead class="thead-default">
+								<tr>
+									<!-- <th>
+										رقم المنتج
+									</th> -->
+									<th>
+										اسم المنتج
+									</th>
+									<th>
+										الفئة
+									</th>
+
+
+									<!-- <th>
+										الوصف
+									</th> -->
+
+									<th>
+										الوحدة
+									</th>
+									<th>
+										الكمية
+									</th>
+									<th>
+										السعر
+									</th>
+
+									<th>
+										المجموع
+									</th>
+									<th>
+										تعديل
+									</th>
+									<th>
+										حذف
+									</th>
+								</tr>
+							</thead>
+							<tbody >
+
+								<tr *ngFor="let orderItem of orderItemsDate">
+									<!-- <th scope="row">{{orderItem.item.itemId}}</th> -->
+									<td>{{orderItem.item.brandName}}</td>
+									<td>{{orderItem.category.description}}</td>
+									<!-- <td>{{orderItem.description}} </td> -->
+									<td> {{orderItem.unit.name}}</td>
+									<td> {{orderItem.quantity}}</td>
+									<td> {{orderItem.unitPrice}}</td>
+									<td> {{totalPrice(orderItem.quantity,orderItem.unitPrice)}}</td>
+									<td>
+										<!-- <a routerLink="/orderManagement/update-orderItem">
+											<button type="button" class="btn waves-effect waves-light gradient-45deg-green-teal gradient-shadow" (click)="doUpdate(orderItem)">
+											تعديل</button>
+										</a> -->
+										<md-icon *ngIf="orderStatus != 'COMPLETED' && orderStatus != 'CANCELED'" (click)="doUpdate(orderItem)">edit</md-icon>
+									</td>
+
+									<td>
+										<md-icon *ngIf="orderStatus != 'COMPLETED' && orderStatus != 'CANCELED'" (click)="openConfirmationDialog(orderItem.orderItemId)">delete</md-icon>
+										<!-- <button type="button" class="btn waves-effect waves-light gradient-45deg-amber-amber gradient-shadow" (click)="delete(orderItem.orderItemId)">حذف</button> -->
+									</td>
+								</tr>
+
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

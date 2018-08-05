@@ -1,0 +1,45 @@
+<div class="silk-card border-primary">
+    <div class="silk-card">
+        <div class="silk-card-title">
+            <div class="silk-head">
+                <div class="silk-pre">
+                    <h4>دور القائمة</h4>
+                </div>
+            </div>
+            <md-divider></md-divider>
+        </div>
+        <div class="silk-card-content">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                    <div class="form-group row">
+                    <label for="example-url-input" class="col-2 col-form-label"> القائمة</label>
+                    <div class="col-4">
+                        <select class="form-control" [formControl]="form.controls['menusId']">
+                            <option *ngFor="let menu of menusList" [ngValue]="menu.menusId">{{menu.description}}</option>
+                        </select>
+                        <small class="silk-block"  *ngIf="form.controls['menusId'].hasError('required') && form.controls['menusId'].touched" class="mat-text-warn">
+                            You must select Menu.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="example-url-input" class="col-2 col-form-label">صلاحية المستخدم</label>
+                    <div class="col-4"><!-- [(ngModel)]="roleGroupId" -->
+                        <select class="form-control" [formControl]="form.controls['roleGroupId']">
+                            <option *ngFor="let roleGroup of roleGroupsList" [ngValue]="roleGroup.roleGroupId">{{roleGroup.description}}</option>
+                        </select>
+                        <small class="silk-block"  *ngIf="form.controls['roleGroupId'].hasError('required') && form.controls['roleGroupId'].touched" class="mat-text-warn">
+                            You must select Role Group.
+                        </small>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <div class="col-12">
+                        <button class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow" type="submit" [disabled]="!form.valid">اضافة</button>
+                    </div>
+                </div>
+            </form>
+
+         
+        </div>
+    </div>
+</div>

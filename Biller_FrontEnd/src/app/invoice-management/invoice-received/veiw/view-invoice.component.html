@@ -1,0 +1,188 @@
+<div class="silk-card border-primary">
+    <div class="silk-card">
+        <div class="silk-card-title">
+            <div class="silk-head">
+                <div class="silk-pre">
+                    <h4>تفاصيل فاتورة رقم {{invoiceId}}</h4>
+
+                    <md-divider>
+
+                    </md-divider>
+                </div>
+            </div>
+            <div class="silk-card-content">
+                <!-- <button type="button" class="btn waves-effect waves-light gradient-45deg-amber-amber gradient-shadow" >مشاهدة</button> -->
+
+
+                <form [formGroup]="form" >
+
+                    <div class="form-group row">
+                        <label for="example-email-input" class="col-2 col-form-label">
+                            الوصف
+                        </label>
+                        <div class="col-4">
+                            <input class="form-control" type="text"  disabled="true" [formControl]="form.controls['description']" id="example-email-input">
+                            <small class="silk-block" *ngIf="form.controls['description'].hasError('required') && form.controls['description'].touched"
+                                class="mat-text-warn">
+                            </small>
+                        </div>
+
+                        <label for="example-email-input" class="col-2 col-form-label">
+                            رقم الدفع
+                        </label>
+                        <div class="col-4">
+                            <input class="form-control" type="text" disabled="true" [formControl]="form.controls['paidNumber']" id="example-email-input">
+                                                 </div>
+                    </div>
+          
+                    <div class="form-group row">
+
+                        <label for="example-email-input" class="col-2 col-form-label">
+                            تاريخ الفاتورة</label>
+                        <div class="col-4">
+                            <input class="form-control" type="text" [ngModel]="invoiceDate | date:'yyyy-MM-dd'"  disabled="true"  [formControl]="form.controls['invoiceDate']"  id="example-email-input" >
+                          
+                        </div>
+                        <label for="example-email-input" class="col-2 col-form-label">
+                            تاريخ الاستحقاق</label>
+                        <div class="col-4">
+                            <input class="form-control" type="text" [ngModel]="dueDate | date:'yyyy-MM-dd'" disabled="true"  [formControl]="form.controls['dueDate']" id="example-email-input" >
+                          
+
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+
+
+                        <label for="example-email-input" class="col-2 col-form-label">
+                            رقم المرجع</label>
+                        <div class="col-4">
+                            <input class="form-control" type="text" disabled="true" [formControl]="form.controls['referenceNumber']" id="example-email-input">
+
+
+                        </div>
+                        <label for="example-email-input" class="col-2 col-form-label">
+                            رقم الطلب</label>
+                        <div class="col-4">
+                            <input class="form-control" type="text" [formControl]="form.controls['orderId']" id="example-email-input"
+                                disabled="true">
+
+
+
+                        </div>
+
+                    </div>
+
+
+
+
+                    <div class="form-group row" >
+
+                            <label for="example-email-input" class="col-2 col-form-label">
+                                الدفع الجزئي</label>
+                            <div class="col-4">
+                                <input class="form-control" type="text" [formControl]="form.controls['paymentWay']"  disabled="true" id="example-email-input">
+                              
+                            </div>
+    
+                            
+                        </div>
+                  
+                    <div class="form-group row" [hidden]="!hiddenField" >
+
+                        <label for="example-email-input" class="col-2 col-form-label">
+                            الحد الأدنى المسموح</label>
+                        <div class="col-4">
+                            <input class="form-control" type="text" disabled="true" [formControl]="form.controls['minimumAmountAllowed']"   id="example-email-input">
+                          
+                        </div>
+
+                        <label for="example-email-input" class="col-2 col-form-label">
+                            الحد الأعلى المسموح</label>
+                        <div class="col-4">
+                            <input class="form-control" type="text" disabled="true" [formControl]="form.controls['maximumAmountAllowed']"  id="example-email-input">
+                        
+
+                        </div>
+
+                    </div>
+
+
+                         
+                </form>
+            </div>
+            <div class="form-group row">
+                
+                
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-2" widget>
+					<div class="silk-card-content widget-body">
+                            <div class="silk-pre">
+                                    <h4>المنتجات</h4>
+                
+                                    <md-divider>
+                
+                                    </md-divider>
+                                </div>
+						<table class="table">
+							<thead class="thead-default">
+                                   
+								<tr>
+									<th>
+										رقم المنتج
+									</th>
+									<th>
+										اسم المنتج
+									</th>
+									<th>
+										الفئة
+									</th>
+
+
+									<th>
+										الوصف
+									</th>
+
+									<th>
+										الوحدة
+									</th>
+									<th>
+										الكمية
+									</th>
+									<th>
+										السعر
+									</th>
+
+									<th>
+										المجموع
+									</th>
+								
+								</tr>
+							</thead>
+							<tbody *ngFor="let item of invoiceItemsData">
+
+								<tr>
+									<th scope="row">{{item.invoiceItemId}}</th>
+									
+									<td *ngIf="item.item">{{item.item.brandName}}</td>
+                                    <td *ngIf="!item.item">-</td>
+									<td *ngIf="item.category">{{item.category.description}}</td>
+									<td *ngIf="!item.category">-</td>
+									<td>{{item.description}} </td>
+									<td *ngIf="item.unit"> {{item.unit.name}}</td>
+									<td *ngIf="!item.unit"> -</td>
+									<td> {{item.quantity}}</td>
+									<td> {{item.unitPrice}}</td>
+									<td> {{totalPrice(item.quantity,item.unitPrice)}}</td>
+								
+								</tr>
+
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+        </div>
+    </div>
+</div>

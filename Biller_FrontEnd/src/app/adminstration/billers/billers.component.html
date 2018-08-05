@@ -1,0 +1,91 @@
+ 
+
+<div class="silk-card border-primary">
+	<div class="silk-card">
+		<div class="silk-card-title">
+			<div class="silk-head">
+				<div class="silk-pre">
+					<h4>المشتركين</h4>
+					<md-divider></md-divider>
+				</div>
+			</div>
+			<div class="silk-card-content">
+			    <form >
+				<div class="form-group row">
+				    <label for="example-search-input" class="col-2 col-form-label"> رمز الشركة</label>
+				    <div class="col-4">
+					<input class="form-control" type="text" placeholder="">
+				    </div>
+				    <label for="example-search-input" class="col-2 col-form-label"> نوع الشركة</label>
+				    <div class="col-4">
+					<select class="form-control">
+					    <option></option>
+					</select>
+				    </div>
+				</div>
+				<div class="form-group row">
+				    <label for="example-search-input" class="col-2 col-form-label"> نشاط الشركة</label>
+				    <div class="col-4">
+					<input class="form-control" type="text" placeholder="">
+				    </div>
+				</div>				
+				<div class="form-group row">
+				    <label for="example-search-input" class="col-2 col-form-label">اسم الشركة</label>
+				    <div class="col-4">
+					<input class="form-control" type="text" placeholder="">
+				    </div>
+				    <label for="example-search-input" class="col-2 col-form-label">نوع الماركة </label>
+				    <div class="col-4">
+					<input class="form-control" type="text" placeholder="">
+				    </div>
+				</div>
+				<div class="form-group row">
+				    <div class="col-12">
+					<button class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow" type="submit">بحث</button>
+				    </div>
+				</div>
+		            </form>
+			</div>
+			<div class="form-group row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-2" widget>
+					<div class="silk-card-content widget-body">
+	                                      <table class="table">
+							<thead class="thead-default">
+							<tr>
+								<th>
+								رقم التعريف
+								</th>
+								<th>
+								الوصف
+								</th>
+								<th>
+								تعديل
+								</th>
+								<th>
+								حذف
+								</th>
+							</tr>
+							</thead>
+							<tbody>
+							<tr>
+								<th scope="row">1000</th>
+								<td>-</td>
+								<td> <a routerLink="/orderManagement/update-category"><button type="button" class="btn waves-effect waves-light gradient-45deg-green-teal gradient-shadow"> تعديل</button ></a> </td>	
+								<td><button type="button" class="btn waves-effect waves-light gradient-45deg-amber-amber gradient-shadow"  (click)="confirm1()" disabled="{{buttonDisabled}}"  label="Confirm">تفعيل</button></td>
+							</tr>
+							<tr>
+								<th scope="row">1001</th>
+								<td>-</td>
+								<td> <a routerLink="/orderManagement/update-category"><button type="button" class="btn waves-effect waves-light gradient-45deg-green-teal gradient-shadow"> تعديل</button ></a> </td>	
+								<td><button type="button" class="btn waves-effect waves-light gradient-45deg-amber-amber gradient-shadow" (click)="confirm2()" disabled="{{buttonDisabled2}}"  label="Confirm">تفعيل</button></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+ <p-confirmDialog></p-confirmDialog>

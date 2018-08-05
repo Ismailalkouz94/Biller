@@ -1,0 +1,238 @@
+<div class="silk-card border-primary">
+	<div class="silk-card">
+		<div class="silk-card-title">
+			<div class="silk-head">
+				<div class="silk-pre">
+					<h4>مركز الرسائل </h4>
+					<md-divider></md-divider>
+				</div>
+			</div>
+			<div class="silk-card-content">
+				<tabset>
+					<tab heading="إلى الشركات">
+						<form [formGroup]="formBiller" (ngSubmit)="search(formBiller.value)">
+
+							<div class="form-group row">
+								<label for="example-search-input" class="col-2 col-form-label">نوع المنشأة</label>
+								<div class="col-4">
+
+									<ngx-dropdown-treeview name="companyType" [items]="companyTypeList | ngxTreeview:'description'" [buttonClass]="'btn-outline-primary'"
+									    (selectedChange)="onSelectedChange_companyType($event)">
+									</ngx-dropdown-treeview>
+									<!-- <small class="silk-block" *ngIf="formBiller.controls['companyType'].hasError('required') && formBiller.controls['companyType'].touched"
+									    class="mat-text-warn">
+									</small> -->
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-search-input" class="col-2 col-form-label">رقم المنشأة</label>
+								<div class="col-4">
+									<input class="form-control" [formControl]="formBiller.controls['companyId']" name="companyId" type="text">
+
+								</div>
+								<label for="example-url-input" class="col-2 col-form-label">إسم المنشأه </label>
+								<div class="col-4">
+									<input class="form-control" [formControl]="formBiller.controls['partyGroupName']" name="partyGroupName" type="text">
+								</div>
+
+							</div>
+
+							<div class="form-group row">
+								<label for="example-url-input" class="col-2 col-form-label"> الرقم الوطني للمنشأة </label>
+								<div class="col-4">
+									<input class="form-control" [formControl]="formBiller.controls['commericalRegistrationNum']" name="commericalRegistrationNum"
+									    type="text" id="example-url-input">
+								</div>
+
+								<label for="example-number-input" class="col-2 col-form-label">حجم المنشأة</label>
+								<div class="col-4">
+									<select class="form-control" [formControl]="formBiller.controls['partySizeId']" name="partySizeId" [(ngModel)]="selecteItem">
+										<option value="ALL" >الكل</option>
+										<option *ngFor="let item of partySizeList" [ngValue]="item.partySizeId">{{item.description}}</option>
+									</select>
+								</div>
+							</div>
+
+							<div class="form-group row">
+
+								<label for="example-email-input" class="col-2 col-form-label">
+									الدولة </label>
+								<div class="col-4">
+									<select class="form-control" [(ngModel)]="countryId" [formControl]="formBiller.controls['countryId']"  (change)="getCities(countryId)">
+										<option *ngFor="let item of countryList" value="{{item.countryId}}" >{{item.description}}</option>
+									</select>
+
+								</div>
+
+								<label for="example-email-input" class="col-2 col-form-label">
+									المدينة </label>
+								<div class="col-4">
+									<!-- <select class="form-control" [(ngModel)]="cityId" [formControl]="form.controls['cityId']" >
+													<option  value="">الكل</option>
+												<option *ngFor="let item of cityList" [ngValue]="item.cityId">{{item.description}}</option>
+											 </select> -->
+									<ngx-dropdown-treeview [items]="cityList | ngxTreeview:'description'" [buttonClass]="'btn-outline-primary'" (selectedChange)="onSelectedChange_Cities($event)">
+									</ngx-dropdown-treeview>
+									<!-- <small class="silk-block" *ngIf="formBiller.controls['cityId'].hasError('required') && formBiller.controls['cityId'].touched"
+									class="mat-text-warn">
+								</small> -->
+								</div>
+							</div>
+							<div class="form-group row">
+								<label for="example-email-input" class="col-2 col-form-label">
+									المشتركين </label>
+								<div class="col-4">
+									<select class="form-control" [formControl]="formBiller.controls['subscriptionType']" [(ngModel)]="selecteType">
+										<option value="ALL">الكل</option>
+										<option value="YES">المشتركين فقط</option>
+										<option value="NO">غير المشتركين</option>
+
+									</select>
+									<small class="silk-block" *ngIf="formBiller.controls['subscriptionType'].hasError('required') && formBiller.controls['subscriptionType'].touched"
+									    class="mat-text-warn">
+									</small>
+								</div>
+
+							</div>
+							<div class="form-group row">
+								<div class="col-12">
+									<button class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow" type="submit"> بحث</button>
+								</div>
+							</div>
+
+						</form>
+
+						<div class="form-group row">
+							<div class="col-4">
+								<button class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow" (click)="sendToALL()" type="button">
+									ارسال للشركات المحددة</button>
+
+							</div>
+						</div>
+						<div class="form-group row">
+							<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-2" widget>
+
+								<div class="silk-card-content widget-body">
+
+
+									<ngx-table [configuration]="configurationAdvanced" [data]="partyGroupList" [columns]="columns">
+										<ng-template let-rowData>
+
+											<td scope="row">
+												<span class="spanWidth">
+													{{rowData.companyId}}
+												</span>
+											</td>
+											<td>{{rowData.partyGroupName}}</td>
+											<td>{{rowData.commericalRegistrationNum}} </td>
+											<td>{{rowData.partySizeDesc}} </td>
+											<td>{{rowData.countryDesc}} </td>
+											<td>{{rowData.cityDesc}} </td>
+
+											<td>{{rowData.companyTypeDesc}} </td>
+											<td>
+												<md-icon mdTooltip="ارسال اشعار" (click)="sendToOneUser(rowData.userLoginId)">notifications_active</md-icon>
+
+
+											</td>
+										</ng-template>
+									</ngx-table>
+								</div>
+
+							</div>
+						</div>
+					</tab>
+				
+						<tab heading="الى الأفراد" (select)="goToLink('/notifications/toCustomres')">
+						</tab>
+
+				</tabset>
+			</div>
+
+			<!-- <div *ngIf="dialog" class="modal-dialog">
+				<div id="formm:j_idt89" class="ui-confirm-dialog ui-dialog ui-widget ui-widget-content ui-corner-all ui-shadow ui-hidden-container"
+				    style="text-align: center; width: 40%; height: auto; left: 449px; top: 169px; z-index: 1014; display: block;" role="dialog"
+				    aria-labelledby="formm:j_idt89_title" aria-hidden="false" aria-live="polite">
+					<div class="ui-dialog-titlebar ui-widget-header ui-helper-clearfix ui-corner-top">
+						<span id="formm:j_idt89_title" class="ui-dialog-title">ارسال رسالة </span>
+						<a href="#" class="ui-dialog-titlebar-icon ui-dialog-titlebar-close ui-corner-all" aria-label="Close" role="button">
+							<span class="ui-icon ui-icon-closethick"></span>
+						</a>
+					</div>
+					<div class="ui-dialog-content ui-widget-content" style="height: auto;">
+						<span class="ui-icon ui-icon- ui-confirm-dialog-severity"></span>
+						<span class="ui-confirm-dialog-message"></span>
+					</div>
+					<div class="ui-dialog-buttonpane ui-dialog-footer ui-widget-content ui-helper-clearfix">
+						<textarea id="formm:t2" name="formm:t2" cols="20" rows="9" maxlength="150" onchange="PrimeFaces.ab({s:&quot;formm:t2&quot;,e:&quot;valueChange&quot;,p:&quot;formm:t2&quot;});"
+						    class="ui-inputfield ui-inputtextarea ui-widget ui-state-default ui-corner-all form-control" role="textbox" aria-disabled="false"
+						    aria-readonly="false" aria-multiline="true"></textarea>
+						<span id="formm:display">عدد الأحرف لا يتجاوز 150 حرف</span>
+						<button id="formm:notall858" name="formm:notall858" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only"
+						    (click)= "sendNotifications()"
+						style="float:right; " type="Reset " role="button " aria-disabled="false ">
+							<span class="ui-button-text ui-c ">إشعار</span>
+						</button>
+						<button id="formm:j_idt90 " name="formm:j_idt90 " class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only "
+						    onclick="PrimeFaces.bcn(this,event,[function(event){PF( 'confirmation2').hide(); playees(); loadimgshow(); clear()},function(event){PrimeFaces.ab({s:&quot;formm:j_idt90&quot;,p:&quot;formm:j_idt90&quot;,u:&quot;formm:t2
+						    formm:growl&quot;});return false;}]); "
+						    style="float:right; " type="Reset " role="button " aria-disabled="false ">
+							<span class="ui-button-text ui-c ">بريد الكتورني</span>
+						</button>
+						<button id="formm:j_idt91 " name="formm:j_idt91 " class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only "
+						    onclick="PrimeFaces.bcn(this,event,[function(event){PF( 'confirmation2').hide(); playees(); loadimgshow()},function(event){PrimeFaces.ab({s:&quot;formm:j_idt91&quot;,p:&quot;formm:j_idt91&quot;,u:&quot;formm:t2
+						    formm:growl&quot;});return false;}]); "
+						    style="float:right; " type="Reset " role="button " aria-disabled="false ">
+							<span class="ui-button-text ui-c ">رسالة هاتف</span>
+						</button>
+						<button id="formm:j_idt92 " name="formm:j_idt92 " class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only "
+						    onclick="PrimeFaces.bcn(this,event,[function(event){PF( 'confirmation2').hide(); playees(); loadimgshow()},function(event){PrimeFaces.ab({s:&quot;formm:j_idt91&quot;,p:&quot;formm:j_idt91&quot;,u:&quot;formm:t2
+						    formm:growl&quot;});return false;}]); "
+						    style="float:right; " type="Reset " role="button " aria-disabled="false ">
+							<span class="ui-button-text ui-c ">واتس اب</span>
+						</button>
+					</div>
+				</div>
+			</div> -->
+		</div>
+	</div>
+</div>
+
+
+
+	<div ngDraggable [@dialog] class="modal-dialog" *ngIf="showDialog">
+	 <div class="modal-dialog" role="document" style="max-width: 522px;">
+		 <div class="modal-content">
+		 <div class="modal-header">
+			 <button type="button" class="close" aria-label="Close" (click)="showDialog = !showDialog;formBiller.get('message').setValue('')"><span aria-hidden="true">&times;</span></button>
+			 <h4 class="modal-title">ارسال رسالة</h4>
+		 </div>
+		 <div class="modal-body">
+		  <div class="silk-card-content widget-body" style="max-width: 522px;">
+				<div class="ui-dialog-buttonpane ui-dialog-footer ui-widget-content ui-helper-clearfix" style="padding:0;width: 100%;">
+					<textarea cols="25" rows="9" maxlength="150" class="form-control" 
+					[formControl]="formBiller.controls['message']"></textarea>
+					<span id="formm:display">عدد الأحرف لا يتجاوز 150 حرف</span><br/>
+					<button md-raised-button class="btn-warn"><md-icon>notifications_active</md-icon> ارسال اشعار</button>	
+					<button md-raised-button color="accent"><md-icon>email</md-icon> بريد الكتروني </button>
+					<button md-raised-button color="accent"><md-icon>message</md-icon>  رسالة هاتف نصية</button>
+					<button md-raised-button color="accent"><md-icon>perm_phone_msg</md-icon>  واتس اب</button>
+					<md-icon class="md-fab md-primary md-button md-ink-ripple btn-warn" (click)="openConfirmationDialog()" mdTooltip="ارسال اشعار">notifications_active
+					</md-icon>
+					<md-icon class="md-fab md-primary md-button md-ink-ripple btn-blue" mdTooltip=" بريد الكتروني">email</md-icon>						
+					<md-icon class="md-fab md-primary md-button md-ink-ripple btn-pink" mdTooltip="  رسالة هاتف نصية">message</md-icon> 
+					<md-icon class="md-fab md-primary md-button md-ink-ripple btn-green" mdTooltip="WhatsApp">perm_phone_msg</md-icon>
+				</div>
+			</div>
+			 </div>		 
+		 <!-- <div class="modal-footer">
+				<button (click)="showDialog = !showDialog" class="btn">Close</button>
+		 </div> -->
+		 </div>
+		</div>
+	 </div>
+<style>
+	.modal-content{
+		box-shadow: 0 2px 5px 0 rgba(180, 199, 245, 0.31), 0 2px 10px 0 rgb(218, 219, 220);
+	}
+</style>

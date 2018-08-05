@@ -1,0 +1,38 @@
+<div class="silk-card border-primary">
+	<div class="silk-card">
+		<div class="silk-card-title">
+			<div class="silk-head">
+				<div class="silk-pre">
+					<h4>اضافة صلاحيات المستخدمين</h4>
+
+					<md-divider>
+
+					</md-divider>
+				</div>
+			</div>
+			<div class="silk-card-content">
+				<!-- <button type="button" class="btn waves-effect waves-light gradient-45deg-amber-amber gradient-shadow" >مشاهدة</button> -->
+
+
+				<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+					<div class="form-group row">
+
+						<label for="example-url-input" class="col-2 col-form-label">الوصف </label>
+						<div class="col-4">
+							<input class="form-control" type="text" [formControl]="form.controls['description']" placeholder="CUSTOMER_FULL" id="example-url-input">
+							<small class="silk-block"  *ngIf="form.controls['description'].hasError('required') && form.controls['description'].touched" class="mat-text-warn">
+								You must fill description.
+							</small>
+						</div>
+						<div class="col-4">
+							<button class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow" type="submit" [disabled]="!form.valid">
+								اضافة
+							</button>
+						</div>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+</div>

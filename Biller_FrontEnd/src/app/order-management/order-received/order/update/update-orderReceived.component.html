@@ -1,0 +1,173 @@
+<div class="silk-card border-primary">
+	<div class="silk-card">
+		<div class="silk-card-title">
+			<div class="silk-head">
+				<div class="silk-pre">
+					<h4> عرض الطلب رقم ({{orderId}})</h4>
+				</div>
+			</div>
+			<!-- <a routerLink="/order/order-received">
+				<button type="button" id="addOrder" class="btn waves-effect waves-light gradient-45deg-green-teal gradient-shadow">الطلبات</button>
+			</a> -->
+
+			<!-- <a routerLink="/transactions/add-order"><button *ngIf="showSelected"  type="button" id="header" class="btn waves-effect waves-light gradient-45deg-green-teal gradient-shadow">التفاصيل</button> </a> -->
+			<!-- <a >
+					<button type="button" id="item" class="btn waves-effect waves-light gradient-45deg-amber-amber gradient-shadow">التفاصيل</button>
+				</a>
+			<a routerLink="/order/add-orderItemReceived">
+				<button type="button" id="item" class="btn waves-effect waves-light gradient-45deg-green-teal gradient-shadow">المنتجات</button>
+			</a> -->
+
+			<md-divider>
+
+			</md-divider>
+		</div>
+		<div class="silk-card-content">
+			<form [formGroup]="form">
+
+				<div class="form-group row">
+					<input class="form-control" hidden="true" [(ngModel)]="orderId" [formControl]="form.controls['orderId']" type="text" placeholder="المفوتر الداخل على النظام"
+					 id="example-email-input">
+
+
+					<!-- <label for="example-search-input" class="col-2 col-form-label">
+							كود الطلب
+						</label>
+						<div class="col-4">
+							<input class="form-control" type="text" [formControl]="form.controls['orderCode']" [(ngModel)]="orderCode" placeholder="">
+						</div> -->
+
+					<label for="example-search-input" class="col-2 col-form-label">
+						اسم الطلب
+					</label>
+					<div class="col-4">
+						<input class="form-control" type="text" [formControl]="form.controls['name']" [(ngModel)]="name" placeholder="">
+						<small class="silk-block" *ngIf="form.controls['name'].hasError('required') && form.controls['name'].touched" class="mat-text-warn">
+							You must include a name.
+						</small>
+					</div>
+
+					<label for="example-email-input" class="col-2 col-form-label">
+						الوصف
+					</label>
+					<div class="col-4">
+						<input class="form-control" type="text" placeholder="" [formControl]="form.controls['description']" [(ngModel)]="description"
+						 id="example-email-input">
+						<small class="silk-block" *ngIf="form.controls['description'].hasError('required') && form.controls['description'].touched"
+						 class="mat-text-warn">
+							You must include a descrption.
+						</small>
+					</div>
+				</div>
+
+				<!-- <input class="form-control" hidden="true" [(ngModel)]="fromPartyId" [formControl]="form.controls['fromPartyId']" type="text" -->
+				<!-- placeholder="المفوتر الداخل على النظام" id="example-email-input"> -->
+				<input class="form-control" hidden="true" type="text" [(ngModel)]="globalItemId" [formControl]="form.controls['globalItemId']">
+				<input class="form-control" hidden="true" type="text" [(ngModel)]="userLoginId" [formControl]="form.controls['userLoginId']">
+
+				<div class="form-group row">
+					<label for="example-email-input" class="col-2 col-form-label">
+						من </label>
+					<div class="col-4">
+						<input class="form-control" [formControl]="form.controls['fromPartyId']" [(ngModel)]="fromPartyId">
+
+						<small class="silk-block" *ngIf="form.controls['toPartyId'].hasError('required') && form.controls['toPartyId'].touched" class="mat-text-warn">
+							You must include a To.
+						</small>
+					</div>
+
+					<label for="example-email-input" class="col-2 col-form-label">
+						تاريخ الطلب </label>
+					<div class="col-4">
+						<input class="form-control" [formControl]="form.controls['orderDate']" [ngModel]="orderDate | date:'yyyy-MM-dd'" type="date"
+						 id="example-email-input">
+						<small class="silk-block" *ngIf="form.controls['orderDate'].hasError('required') && form.controls['orderDate'].touched" class="mat-text-warn">
+							You must include a Order Date.
+						</small>
+
+					</div>
+
+
+				</div>
+
+
+			</form>
+
+		</div>
+	</div>
+</div>
+<!-- .......................... -->
+<div class="silk-card border-primary">
+	<div class="silk-card">
+		<div class="silk-card-title">
+				<div class="silk-head">
+						<div class="silk-pre">
+							<h4>المنتجات</h4>
+						</div>
+					</div>
+		</div>
+		<div class="silk-card-content">
+			
+			<div class="form-group row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-2" widget>
+					<div class="silk-card-content widget-body">
+						<table class="table">
+							<thead class="thead-default">
+								<tr>
+									<!-- <th>
+											رقم المنتج
+										</th> -->
+									<th>
+										اسم المنتج
+									</th>
+									<th>
+										الفئة
+									</th>
+
+
+									<!-- <th>
+											الوصف
+										</th> -->
+
+									<th>
+										الوحدة
+									</th>
+									<th>
+										الكمية
+									</th>
+									<th>
+										السعر
+									</th>
+
+									<th>
+										المجموع
+									</th>
+
+								</tr>
+							</thead>
+							<tbody *ngFor="let item of orderItems">
+
+								<tr>
+									<!-- <th scope="row">{{orderItem.item.itemId}}</th> -->
+									<td>{{item.item.brandName}}</td>
+									<td>{{item.category.description}}</td>
+									<!-- <td>{{orderItem.description}} </td> -->
+									<td> {{item.unit.name}}</td>
+									<td> {{item.quantity}}</td>
+									<td> {{item.unitPrice}}</td>
+									<td> {{totalPrice(item.quantity,item.unitPrice)}}</td>
+
+								</tr>
+
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+
+
+
+	</div>
+</div>

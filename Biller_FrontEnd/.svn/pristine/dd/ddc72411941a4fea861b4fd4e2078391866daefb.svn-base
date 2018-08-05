@@ -1,0 +1,115 @@
+<div class="silk-card border-primary">
+     <div class="silk-card">
+            <div class="silk-card-title">
+                <div class="silk-head">
+                    <div class="silk-pre">
+                        <h4>اضافة منشأة</h4>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+            </div>
+            <div class="silk-card-content">
+               <form [formGroup]="form" (ngSubmit)="onSubmit()">
+				<input name="partyType" class="form-control"  [formControl]="form.controls['partyType']"  [value]="partyType"   type="hidden"/> 
+				<!-- <input name="partyId" class="form-control"  [formControl]="form.controls['partyId']" [value]="1"    type="hidden"/>  -->
+
+
+                <div class="form-group row">
+                        <label for="example-text-input" class="col-2 col-form-label">نوع المنشأة</label>
+			<div class="col-2">
+			<label><input  name="partyGroupType" [formControl]="form.controls['partyGroupType']" [value]="true" [(ngModel)]="options" [checked]="options" type="radio" value="COMPANY" /> شركة</label>
+			</div>
+			<div class="col-2">
+			<label><input name="partyGroupType" type="radio" [formControl]="form.controls['partyGroupType']" [(ngModel)]="options"  [value]="false"  [checked]="!options" value="ORGNIZATION" /> مؤسسة</label>
+			</div>
+                </div>
+                <div class="form-group row" *ngIf="options">		   
+			<label for="example-search-input" class="col-2 col-form-label">نوع الشركة</label>
+			<div class="col-4">
+				<select class="form-control"  [formControl]="form.controls['companyType']" >
+				    <option value="1">تضامن</option>
+				    <option value="2">أجنبية غير عاملة</option>
+				    <option value="3">غير ربحية</option>
+				    <option value="4">معفاه</option>
+				    <option value="5">التوصية البسيطة</option>
+				    <option value="6">توصية بالاسهم</option>
+				    <option value="7">ذات المسؤولية المحدودة</option>
+				    <option value="8">المحاصة</option>
+				    <option value="9">مساهمة خاصة</option>
+				    <option value="10">أجنبية عاملة</option>
+				    <option value="11">مساهمة عامة</option>
+				</select>
+			</div>
+                </div>
+                <div class="form-group row">
+			<label for="example-search-input" class="col-2 col-form-label">رقم المنشأة</label>
+			<div class="col-4">
+				<input class="form-control"  [formControl]="form.controls['partyGroupCode']" type="text" placeholder="1" [formControl]="form.controls['fnum']">
+			</div>
+                </div>							
+                <div class="form-group row">
+			<label for="example-search-input" class="col-2 col-form-label">الرقم الضريبي للمنشأة</label>
+			<div class="col-4">
+			    <input class="form-control" [formControl]="form.controls['partyTaxId']"  type="text" placeholder="123456789" [formControl]="form.controls['fname']" id="example-search-input">
+			</div>
+			<label for="example-email-input" class="col-2 col-form-label">صندوق البريد</label>
+			<div class="col-4">
+			    <input class="form-control" [formControl]="form.controls['mailBox']"  type="text" placeholder="11623" [formControl]="form.controls['fpostal']" id="example-email-input">
+			</div>
+                </div>
+                <div class="form-group row">
+			<label for="example-url-input"  class="col-2 col-form-label">الإسم التجاري للمنشأه </label>
+			<div class="col-4">
+			    <input class="form-control" [formControl]="form.controls['partyGroupName']"  type="text" placeholder="Amazon" id="example-url-input">
+			</div>
+			<label for="example-tel-input" class="col-2 col-form-label">رمز البريد</label>
+			<div class="col-4">
+			    <input class="form-control" [formControl]="form.controls['postalCode']"  type="text" placeholder="288852" id="example-tel-input">
+			</div>
+		    </div>
+		    <div class="form-group row">
+			<label for="example-url-input"  class="col-2 col-form-label">رقم السجل التجاري</label>
+			<div class="col-4">
+				<input class="form-control" [formControl]="form.controls['commericalRegistrationNum']"  type="text" placeholder="20000" id="example-url-input">
+			</div>
+			<label for="example-tel-input" class="col-2 col-form-label">رأس مال الشركة</label>
+			<div class="col-4">
+				<input class="form-control" [formControl]="form.controls['partyCapital']"  type="text" placeholder="1000" id="example-tel-input">
+			</div>
+		   </div>
+                <div class="form-group row">
+		    <label for="example-password-input" class="col-2 col-form-label">النشـاط</label>
+		    <div class="col-4">
+			<input class="form-control" [formControl]="form.controls['partyActivity']"  type="text" placeholder="تجاري" id="example-password-input">
+		    </div>
+		    <label for="example-number-input" class="col-2 col-form-label">حجم المنشأة</label>
+		    <div class="col-4">
+			<input class="form-control" [formControl]="form.controls['partySize']"  type="text" placeholder="متوسطة" id="example-number-input">
+		    </div>
+                </div>
+                <div class="form-group row">
+                    <label for="example-number-input" class="col-2 col-form-label">معدل الفواتير الشهرية</label>
+		    <div class="col-4">
+                        <input class="form-control" [formControl]="form.controls['monthlyInvoicingRate']"  type="text" placeholder="1000" id="example-biller-input">
+                    </div>
+                </div>
+                <div class="form-group row">
+		    <label for="example-number-input" class="col-2 col-form-label">رقم الهاتف 1</label>
+		    <div class="col-4">
+			<input class="form-control"  [formControl]="form.controls['telephoneNumber1']"  type="tel" placeholder="079" id="example-tel1-input">
+		    </div>
+		    <label for="example-number-input" class="col-2 col-form-label">رقم الهاتف 2</label>
+		    <div class="col-4">
+			<input class="form-control" [formControl]="form.controls['telephoneNumber2']"  type="tel" placeholder="079" id="example-tel2-input">
+		    </div>
+                </div>
+                <div class="form-group row">
+		    <div class="col-12">
+                        <button class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow" type="submit">اضافة المنشأه</button>
+		    </div>
+                </div>
+	       </form>
+            </div>
+        </div>
+</div>
+

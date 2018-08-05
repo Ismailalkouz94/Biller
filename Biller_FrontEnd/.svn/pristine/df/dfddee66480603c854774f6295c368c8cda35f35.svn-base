@@ -1,0 +1,97 @@
+<div class="silk-card border-primary">
+	<div class="silk-card">
+		<div class="silk-card-title">
+			<div class="silk-head">
+				<div class="silk-pre">
+					<h4>استعلام الوحدات</h4>
+					<a routerLink="/config/add-unit">
+						<button type="button" class="btn waves-effect waves-light gradient-45deg-green-teal gradient-shadow">اضافة وحدة جديدة</button>
+					</a>
+
+					<md-divider>
+
+					</md-divider>
+				</div>
+			</div>
+			<div class="silk-card-content">
+				<!-- <button type="button" class="btn waves-effect waves-light gradient-45deg-amber-amber gradient-shadow" >مشاهدة</button> -->
+
+
+				<form [formGroup]="form" (ngSubmit)="findByCriteria(form.value)">
+					<div class="form-group row">
+
+						<label for="example-url-input" class="col-2 col-form-label">رقم الوحدة</label>
+						<div class="col-4">
+							<input class="form-control" type="text" [formControl]="form.controls['unitId']" [(ngModel)]="unitId" id="example-url-input">
+						</div>
+
+						<label for="example-url-input" class="col-2 col-form-label">اسم الوحدة</label>
+						<div class="col-4">
+							<input class="form-control" type="text" [formControl]="form.controls['name']" [(ngModel)]="name" id="example-url-input">
+						</div>
+					</div>
+					<!-- <div class="form-group row"> -->
+					<!-- <label for="example-email-input" class="col-2 col-form-label">رقم الطرف</label> -->
+					<!-- <div class="col-4"> -->
+					<input class="form-control" hidden="true" [formControl]="form.controls['partyId']" [(ngModel)]="partyId" type="text" id="example-tel-input">
+					<!-- </div> -->
+					<!-- </div> -->
+					<div class="form-group row">
+						<div class="col-12">
+							<button class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow" type="submit">
+								بحث
+							</button>
+
+						</div>
+					</div>
+				</form>
+
+			</div>
+
+
+
+
+			<div class="form-group row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-2" widget>
+					<div class="silk-card-content widget-body">
+						<table class="table">
+							<thead class="thead-default">
+								<tr>
+									<th>
+										رقم الوحدة
+									</th>
+									<th>
+										اسم الوحدة
+									</th>
+
+									<th>
+										تعديل
+									</th>
+									<th>
+										حذف
+									</th>
+								</tr>
+							</thead>
+							<tbody *ngFor="let units of unitsList">
+								<tr>
+									<th scope="row">{{units.unitId}}</th>
+
+									<td>{{units.name}}</td>
+
+									<td>
+										<md-icon (click)="update(units.unitId)">edit</md-icon>
+									</td>
+									<td>
+										<md-icon (click)="openConfirmationDialog(units.unitId)">delete</md-icon>
+									</td>
+								</tr>
+
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

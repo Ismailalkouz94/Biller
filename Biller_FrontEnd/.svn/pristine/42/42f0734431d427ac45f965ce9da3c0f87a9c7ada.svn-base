@@ -1,0 +1,41 @@
+<div class="silk-card border-primary">
+    <div class="silk-card">
+        <div class="silk-card-title">
+            <div class="silk-head">
+                <div class="silk-pre">
+                    <h4> اضافة الوحدات</h4>
+                </div>
+            </div>
+            <md-divider></md-divider>
+        </div>
+        <div class="silk-card-content">
+            <form [formGroup]="form" (ngSubmit)="onSubmit()">
+                <div class="form-group row">
+                    <label for="example-url-input" class="col-2 col-form-label">اسم الوحدة</label>
+                    <div class="col-4">
+                        <input class="form-control" type="text" [formControl]="form.controls['name']" placeholder="" id="example-url-input">
+                    </div>
+                    <small class="silk-block" *ngIf="form.controls['name'].hasError('required') && form.controls['name'].touched" class="mat-text-warn">
+                        You must include a name.
+                    </small>
+
+                    <label for="example-url-input" hidden="true" class="col-2 col-form-label">رقم الطرف</label>
+                    <div class="col-4">
+                        <input class="form-control" type="text" hidden="true" [(ngModel)]="partyId" [formControl]="form.controls['partyId']" placeholder="1000"
+                            id="example-url-input">
+                    </div>
+                </div>
+
+                <div class="col-4">
+                    <button class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow" type="submit" [disabled]="!form.valid">
+                        اضافة
+                    </button>
+
+                </div>
+
+
+            </form>
+
+        </div>
+    </div>
+</div>

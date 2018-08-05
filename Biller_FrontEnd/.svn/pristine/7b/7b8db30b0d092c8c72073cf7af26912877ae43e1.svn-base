@@ -1,0 +1,114 @@
+<div class="silk-card border-primary">
+	<div class="silk-card">
+		<div class="silk-card-title">
+			<div class="silk-head">
+				<div class="silk-pre">
+					<h4> اضافة الطلبية</h4>
+				</div>
+			</div>
+
+			<a routerLink="/order/order-sent">
+				<button *ngIf="showSelected" type="button" id="addOrder" class="btn waves-effect waves-light gradient-45deg-green-teal gradient-shadow">الطلبات</button>
+			</a>
+
+			<!-- <a routerLink="/transactions/add-order"><button *ngIf="showSelected"  type="button" id="header" class="btn waves-effect waves-light gradient-45deg-green-teal gradient-shadow">التفاصيل</button> </a> -->
+			<a routerLink="/order/add-orderItemSent">
+				<button *ngIf="showSelected" type="button" id="item" class="btn waves-effect waves-light gradient-45deg-green-teal gradient-shadow">المنتجات</button>
+			</a>
+
+			<md-divider>
+
+			</md-divider>
+		</div>
+		<div class="silk-card-content">
+			<form [formGroup]="form" (ngSubmit)="onSubmit()">
+
+				<div class="form-group row">
+					<input class="form-control" hidden="true" [(ngModel)]="orderId" [formControl]="form.controls['orderId']" type="text" id="example-email-input">
+
+					<label for="example-search-input" class="col-2 col-form-label">
+						كود الطلب
+					</label>
+					<div class="col-4">
+						<input class="form-control" type="text" [formControl]="form.controls['orderCode']" placeholder="">
+					</div>
+
+					<label for="example-search-input" class="col-2 col-form-label">
+						اسم الطلب
+					</label>
+					<div class="col-4">
+						<input class="form-control" type="text" [formControl]="form.controls['name']" placeholder="">
+						<small class="silk-block" *ngIf="form.controls['name'].hasError('required') && form.controls['name'].touched" class="mat-text-warn">
+							You must include a name.
+						</small>
+					</div>
+                </div>
+                <div class="form-group row">
+					<label for="example-email-input" class="col-2 col-form-label">
+						الوصف
+					</label>
+					<div class="col-4">
+						<input class="form-control" type="text" placeholder="" [formControl]="form.controls['description']" id="example-email-input">
+						<small class="silk-block" *ngIf="form.controls['description'].hasError('required') && form.controls['description'].touched"
+						 class="mat-text-warn">
+							You must include a descrption.
+						</small>
+					</div>
+
+				</div>
+
+				<input class="form-control" hidden="true" [(ngModel)]="fromPartyId" [formControl]="form.controls['fromPartyId']" type="text"
+				 placeholder="المفوتر الداخل على النظام">
+				<input class="form-control" hidden="true" type="text" [(ngModel)]="globalItemId" [formControl]="form.controls['globalItemId']"
+				 placeholder="قيد الإنشاء">
+				<input class="form-control" hidden="true" type="text" [(ngModel)]="userLoginId" [formControl]="form.controls['userLoginId']">
+
+				<div class="form-group row">
+					<label for="example-email-input" class="col-2 col-form-label">
+						الى </label>
+					<div class="col-4">
+						<select class="form-control" [formControl]="form.controls['toPartyId']">
+							<option *ngFor="let party of favPartyList" [ngValue]="party.partyId">{{party.name}}</option>
+						</select>
+
+						<small class="silk-block" *ngIf="form.controls['toPartyId'].hasError('required') && form.controls['toPartyId'].touched" class="mat-text-warn">
+							You must include a To.
+						</small>
+					</div>
+
+
+					<label for="example-email-input" class="col-2 col-form-label">
+						تاريخ الطلب </label>
+					<div class="col-4">
+						<input class="form-control" [formControl]="form.controls['orderDate']" type="date" id="example-email-input">
+						<small class="silk-block" *ngIf="form.controls['orderDate'].hasError('required') && form.controls['orderDate'].touched" class="mat-text-warn">
+							You must include a Order Date.
+						</small>
+					</div>
+
+				</div>
+				<div class="form-group row">
+					<div class="col-12">
+						<!-- please Note you can change button vlaue using two way 
+							1- value="{{your Varibale Name}}"
+							2- [value]="your Varibale Name"
+												-->
+						<button *ngIf="!edit" class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow" type="submit" [disabled]="!form.valid"> 
+						اضافه </button>
+
+						<!-- <button *ngIf="!edit" class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow" (click)="doSent()"  type="submit" [disabled]="!form.valid"> 
+								ارسال </button>
+ -->
+
+						 <button *ngIf="edit" class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow" type="submit" [disabled]="!form.valid"
+						 >تعديل </button>
+
+
+					</div>
+				</div>
+
+			</form>
+
+		</div>
+	</div>
+</div>

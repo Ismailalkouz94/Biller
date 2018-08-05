@@ -1,0 +1,117 @@
+<div class="silk-card border-primary">
+	<div class="silk-card">
+		<div class="silk-card-title">
+			<div class="silk-head">
+				<div class="silk-pre">
+					<h4>استعلام المنتجات</h4>
+					<a routerLink="/config/add-item">
+						<button type="button" class="btn waves-effect waves-light gradient-45deg-green-teal gradient-shadow"  >اضافة منتج جديد</button>
+					</a>
+
+					<md-divider>
+
+					</md-divider>
+				</div>
+			</div>
+			<div class="silk-card-content">
+				<!-- <button type="button" class="btn waves-effect waves-light gradient-45deg-amber-amber gradient-shadow" >مشاهدة</button> -->
+
+
+				<form [formGroup]="form" (ngSubmit)="showSuccess()">
+
+					<div class="form-group row">
+						<label for="example-search-input" class="col-2 col-form-label">
+							رقم المنتج
+						</label>
+						<div class="col-4">
+							<input class="form-control" type="text" placeholder="">
+						</div>
+
+						<label for="example-email-input" class="col-2 col-form-label">
+							اسم المنتج
+						</label>
+						<div class="col-4">
+							<input class="form-control" type="text"  id="example-email-input">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="example-url-input" class="col-2 col-form-label">
+							الوصف
+						</label>
+						<div class="col-4">
+							<input class="form-control" type="text"  id="example-url-input">
+						</div>
+						<label for="example-email-input" class="col-2 col-form-label">
+							الفئة </label>
+						<div class="col-4">
+						    <ngx-dropdown-treeview-select [items]="items" [(value)]="value" (valueChange)="onValueChange($event)">
+						    </ngx-dropdown-treeview-select>
+						</div>
+					</div>
+
+					<div class="form-group row">
+						<div class="col-12">
+							<button class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow" type="submit" >
+								بحث
+							</button>
+
+						</div>
+					</div>
+
+				</form>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-2" widget>
+					<div class="silk-card-content widget-body">
+						<table class="table">
+							<thead class="thead-default">
+								<tr>
+									<th>
+										رقم المنتج
+									</th>
+									<th>
+										اسم المنتج
+									</th>
+									<th>
+										الوصف
+									</th>
+									<th>
+										الفئة
+									</th>
+									<th>
+										تعديل
+									</th>
+									<th>
+										حذف
+									</th>
+								</tr>
+							</thead>
+							<tbody  *ngFor="let items of itemsList">
+
+								<tr>
+									<th scope="row">{{items.itemId}}</th>
+									<td>{{items.brandName}}</td>
+									<td>{{items.description}}</td>
+									<td>{{items.category.description}} </td>
+									<td>
+											<!-- <button type="button" class="btn waves-effect waves-light gradient-45deg-green-teal gradient-shadow" (click)="update(items.itemId)">
+												تعديل
+											</button> -->
+											<md-icon (click)="update(items.itemId)">edit</md-icon> 
+									</td>
+									<td>
+											<md-icon  (click)="openConfirmationDialog(items.itemId)">delete</md-icon> 
+										<!-- <button type="button" class="btn waves-effect waves-light gradient-45deg-amber-amber gradient-shadow" (click)="delete(items.itemId)" >حذف</button> -->
+									</td>
+								</tr>
+								
+
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

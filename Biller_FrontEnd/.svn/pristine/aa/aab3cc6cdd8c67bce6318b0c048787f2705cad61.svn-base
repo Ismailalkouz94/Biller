@@ -1,0 +1,123 @@
+
+<div class="silk-card border-primary">
+     <div class="silk-card">
+            <div class="silk-card-title">
+                <div class="silk-head">
+                    <div class="silk-pre">
+                        <h4>شاشة الإستعلام عن حالة الفواتير</h4>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+            </div>
+            <div class="silk-card-content">
+               <form>
+                <div class="form-group row">
+		    <div class="col-6">
+			<label for="example-search-input" class="col-form-label">اسم الشركة للعميل</label>
+			<div class="col-8">
+			    <input class="form-control" type="text" placeholder="123456789">
+			</div>
+		    </div>
+		    <div class="col-6">
+			<label for="example-email-input" class="col-form-label"> رقمها</label>
+			<div class="col-8">
+			    <input class="form-control" type="text" placeholder="11623"id="example-email-input">
+			</div>
+		    </div>
+                </div>
+                <div class="form-group row">
+		    <div class="col-6">
+			<label for="example-url-input" class="col-form-label">رقم السجل التجاري للعميل </label>
+			<div class="col-8">
+			    <input class="form-control" type="text" placeholder="Amazon" id="example-url-input">
+			</div>
+		    </div>
+		    <div class="col-6">
+			<label for="example-tel-input" class="col-form-label">رقم الفاتورة</label>
+			<div class="col-8">
+			    <input class="form-control" type="text" placeholder="288852" id="example-tel-input">
+			</div>
+		    </div>
+                </div>
+                <div class="form-group row">
+		    <div class="col-6">
+			<label for="example-password-input" class="col-form-label">حالة الفاتورة</label>
+			<div class="col-8">
+			    <select class="form-control" id="exampleSelect1">
+				<option>مدفوعة</option>
+				<option>غير مدفوعة</option>
+				<option>مدفوع جزئي</option>
+			     </select>			</div>
+		    </div>
+		    <div class="col-6">
+			<label for="example-number-input" class="col-form-label">حجم المنشأة</label>
+			<div class="col-8">
+			    <input class="form-control" type="text" placeholder="متوسطة" id="example-number-input">
+			</div>
+		    </div>
+                </div>
+                <div class="form-group row">
+		    <div class="col-6">
+                    <label for="example-number-input" class="col-form-label">تاريخ الترحيل من</label>    
+		    <div class="col-8">
+                        <input class="form-control" type="text" placeholder="1000" id="example-biller-input">
+                    </div>
+                    </div>
+		    <div class="col-6">
+			<label for="example-search-input" class="col-form-label">إلى</label>
+			<div class="col-8">
+			    <input class="form-control" type="text" placeholder="1">
+			</div>
+		    </div>
+                </div>
+                <div class="form-group row">
+		    <div class="col-6">
+			<label for="example-number-input" class="col-form-label">تاريخ التسديد من</label>
+			<div class="col-8">
+			    <input class="form-control" type="tel" placeholder="079" id="example-tel1-input">
+			</div>
+		    </div>
+		    <div class="col-6">
+			<label for="example-number-input" class="col-form-label">إلى</label>
+			<div class="col-8">
+			    <input class="form-control" type="tel" placeholder="079" id="example-tel2-input">
+			</div>
+		    </div>
+                </div>
+                <div class="form-group row">
+			<div class="col-md-6">
+                            <button type="submit" class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow">طباعة</button>
+                           <button type="submit" class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow">استعلام</button>
+                        </div>
+                </div>
+	       </form>
+        <div class="widget-body">
+	    <table class="material table">
+		<thead class="thead-default">
+		<tr>
+		    <th>رقم الفاتورة</th>
+		    <th>اسم العميل</th>
+		    <th>حالة الفاتورة</th>
+		    <th>مبلغ الفاتورة</th>
+		    <th>المبلغ المسدد</th>
+		    <th>تاريخ الترحيل</th>
+		    <th>تاريخ التسديد</th>
+		</tr>
+		</thead>
+		<tbody>
+		    <tr>
+			<td>3589963</td>
+			<td>امازون</td>
+			<td>مدفوعة</td>
+			<td>10000</td>
+			<td>10000</td>
+			<td>1/4/2018</td>
+			<td>5/4/2018</td>
+		    </tr>
+		</tbody>		
+	    </table>
+      </div>
+            </div>
+        </div>
+</div>
+

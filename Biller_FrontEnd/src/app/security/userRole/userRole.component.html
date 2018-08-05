@@ -1,0 +1,94 @@
+<div class="silk-card border-primary">
+	<div class="silk-card">
+		<div class="silk-card-title">
+			<div class="silk-head">
+				<div class="silk-pre">
+					<h4>دور القائمة</h4>
+				</div>
+			</div>
+			<md-divider></md-divider>
+		</div>
+		<div class="silk-card-content">
+			<form [formGroup]="form" (ngSubmit)="onSubmit()">
+				<div class="form-group row">
+					<label for="example-search-input" class="col-2 col-form-label">الوصف</label>
+					<div class="col-4">
+						<!-- <input class="form-control" type="text" placeholder=""> -->
+						<input class="form-control" type="text" [formControl]="form.controls['description']" placeholder="Biller Full" id="example-url-input">
+						<small class="silk-block"  *ngIf="form.controls['description'].hasError('required') && form.controls['description'].touched" class="mat-text-warn">
+                            You must fill description.
+                        </small>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="example-url-input" class="col-2 col-form-label"> اسم المستخدم</label>
+					<div class="col-4">
+						<select class="form-control" [formControl]="form.controls['userLoginId']">
+							<option *ngFor="let user of userList" [ngValue]="user.userLoginId">{{user.userName}} - {{user.party.partyId}}</option>
+						</select>
+						<small class="silk-block"  *ngIf="form.controls['userLoginId'].hasError('required') && form.controls['userLoginId'].touched" class="mat-text-warn">
+                            You must select user Login.
+                        </small>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="example-url-input" class="col-2 col-form-label">صلاحية المستخدم</label>
+					<div class="col-4">
+						<!-- [(ngModel)]="roleGroupId" -->
+						<select class="form-control" [formControl]="form.controls['roleGroupId']">
+							<option *ngFor="let roleGroup of roleGroupsList" [ngValue]="roleGroup.roleGroupId">{{roleGroup.description}}</option>
+						</select>
+						<small class="silk-block"  *ngIf="form.controls['roleGroupId'].hasError('required') && form.controls['roleGroupId'].touched" class="mat-text-warn">
+                            You must select Role Group.
+                        </small>
+					</div>
+				</div>
+				<div class="form-group row">
+					<div class="col-12">
+						<button class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow" type="submit" [disabled]="!form.valid">اضافة</button>
+					</div>
+				</div>
+			</form>
+
+			<div class="form-group row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-2" widget>
+					<div class="silk-card-content widget-body">
+						<table class="table">
+							<thead class="thead-default">
+								<tr>
+									<th>
+										رقم
+									</th>
+									<th>
+										الوصف
+									</th>
+									<th>
+										اسم المستخدم
+									</th>
+									<th>
+										صلاحيات
+									</th>
+									<th>
+										حذف
+									</th>
+								</tr>
+							</thead>
+							<tbody *ngFor="let userRole of userRoleList">
+
+								<tr>
+									<th scope="row">{{userRole.userRoleId}}</th>
+									<td>{{userRole.description}} </td>
+									<td>{{userRole.userLogin.userName}} </td>
+									<td> {{userRole.roleGroup.description}}</td>
+									<td>
+										<button type="button" class="btn waves-effect waves-light gradient-45deg-amber-amber gradient-shadow" (click)="delete(userRole.userRoleId)">حذف</button>
+									</td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

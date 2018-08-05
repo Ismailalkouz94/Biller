@@ -1,0 +1,377 @@
+
+<div class="silk-card border-success" widget>
+    <div class="silk-card-title d-flex justify-content-between">
+        <h4>ملف الفواتير</h4>
+    </div>
+    <div class="silk-card-content widget-body">
+         <hr/>
+            <div class="container bootstrap snippet">
+                <div class="row">
+                      <div class="col-sm-3"><!--left col-->
+                          
+            
+                  <div class="text-center">
+                    <img  [src]="url2"  class="avatar img-circle img-thumbnail" alt="avatar">
+                    <input type="file" (change)="onSelectFile($event)" class="text-center center-block file-upload">
+                  </div><hr/><br>
+            
+                           
+                      <div class="panel panel-default">
+                        <div class="panel-heading">Website <i class="fa fa-link fa-1x"></i></div>
+                        <div class="panel-body"><a href="http://bootnipets.com">bootnipets.com</a></div>
+                      </div>                    
+                      <ul class="list-group">
+                        <li class="list-group-item text-muted" style="color: #fff !important">Activity <i class="fa fa-dashboard fa-1x"></i></li>
+                        <li class="list-group-item text-right"><span class="pull-left"><strong>Shares</strong></span> 125</li>
+                        <li class="list-group-item text-right"><span class="pull-left"><strong>Likes</strong></span> 13</li>
+                        <li class="list-group-item text-right"><span class="pull-left"><strong>Posts</strong></span> 37</li>
+                        <li class="list-group-item text-right"><span class="pull-left"><strong>Followers</strong></span> 78</li>
+                      </ul> 
+                           
+                      <div class="panel panel-default">
+                        <div class="panel-heading">Social Media</div>
+                        <div class="panel-body">
+                            <i class="fa fa-facebook fa-2x"></i> <i class="fa fa-github fa-2x"></i> <i class="fa fa-twitter fa-2x"></i> <i class="fa fa-pinterest fa-2x"></i> <i class="fa fa-google-plus fa-2x"></i>
+                        </div>
+                      </div>                     
+                    </div>
+                    <div class="col-sm-9">
+                          <tabset>
+                                <tab heading="Home">
+                                        <form class="form"  action="##" method="post" id="registrationForm">
+                                            <!-- <div class="form-group">                                        
+                                                <div class="col-8">
+                                                    <label for="first_name"><h6>نوع المنشأة</h6></label>
+                                                    <input type="text" class="form-control" name="first_name" />
+                                                </div>
+                                            </div> -->
+                                            <div class="form-group row">
+                                                <label for="example-text-input" class="col-2 col-form-label">نوع المنشأة</label>
+                                    <div class="col-2">
+                                    <label><input  name="partyGroupType"  [value]="true" [(ngModel)]="options" [checked]="options" type="radio" value="COMPANY" /> شركة</label>
+                                    </div>
+                                    <div class="col-2">
+                                    <label><input name="partyGroupType" type="radio" [(ngModel)]="options"  [value]="false"  [checked]="!options" value="ORGNIZATION" /> مؤسسة</label>
+                                    </div>
+                                        </div>
+                                            <div class="form-group">
+                                                
+                                                <div class="col-8">
+                                                  <label for="last_name"><h6>نوع الشركة</h6></label>
+                                                    <input type="text" class="form-control" name="last_name"/>
+                                                </div>
+                                            </div>
+                                
+                                            <div class="form-group">
+                                                
+                                                <div class="col-8">
+                                                    <label for="phone"><h6>نشاط الشركة</h6></label>
+                                                    <input type="text" class="form-control" name="phone"/>
+                                                </div>
+                                            </div>
+                                
+                                            <div class="form-group">
+                                                <div class="col-8">
+                                                   <label for="mobile"><h6>اسم الشركة</h6></label>
+                                                    <input type="text" class="form-control" name="mobile"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                
+                                                <div class="col-8">
+                                                    <label for="email"><h6>نوع الماركة</h6></label>
+                                                    <input type="text" class="form-control" name="email"/>
+                                                </div>
+                                            </div>
+                                            <div class="form-group">
+                                                 <div class="col-12">
+                                                      <br>
+                                                        <button class="btn btn-lg btn-success" type="submit"><i class="glyphicon glyphicon-ok-sign"></i> Save</button>
+                                                         <button class="btn btn-lg" type="reset"><i class="glyphicon glyphicon-repeat"></i> Reset</button>
+                                                  </div>
+                                            </div>
+                                        </form>
+                      
+                                </tab>
+                                <tab heading="Change Password">
+                                </tab>
+                          </tabset>                                                                     
+                      </div>
+                    </div>
+                </div>                             
+    </div>
+</div>
+<app-dialog [(visible)]="showDialog">
+   <div class="modal-dialog">
+	<div class="modal-dialog" role="document">
+	    <div class="modal-content">
+		<div class="modal-header">
+		    <button type="button" class="close" aria-label="Close" (click)="showDialog = !showDialog"><span aria-hidden="true">&times;</span></button>
+		    <h4 class="modal-title">مشاهدة</h4>
+		</div>
+		<div class="modal-body">
+         <div class="silk-card-content widget-body">
+                <table class="table">
+                    <thead class="thead-default">
+                        <tr>
+                            <th>الإسم التجاري للمنشأه</th>
+                            <th>رقم السجل التجاري</th>
+                            <th>رأس مال الشركة </th>
+                            <th>بنك التسوية (آيبان)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Amazon</td>
+                            <td>1236584</td>
+                            <td>10000</td>
+                            <td>15</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+		</div>
+		<div class="modal-footer">
+	           <button (click)="showDialog = !showDialog" class="btn">Close</button>
+		</div>
+	    </div><!-- /.modal-content-->
+	</div>
+   </div>
+</app-dialog> 
+
+<div class="backdrop" [ngStyle]="{'display':display}"></div>
+<div id="bootstrapModel" class="modal" role="dialog"  [ngStyle]="{'display':display}">
+    <div class="modal-dialog">
+	<div class="modal-dialog" role="document">
+	    <div class="modal-content">
+		<div class="modal-header">
+		    <button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><span aria-hidden="true">&times;</span></button>
+		    <h4 class="modal-title">مشاهدة</h4>
+		</div>
+		<div class="modal-body" body2>
+         <div class="silk-card-content widget-body">
+                <table class="table">
+                    <thead class="thead-default">
+                        <tr>
+                            <th>الرقم الضريبي للمنشأة</th>
+                            <th>صندوق البريد</th>
+                            <th>الإسم التجاري للمنشأه </th>
+                            <th>الرمز البريدي</th>
+                            <th>رقم السجل التجاري</th>
+                            <th>رأس مال الشركة</th>
+                            <th>النشــــاط</th>
+                            <th>حجم المنشأة</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>576</td>
+                            <td>sanabel</td>
+                            <td>795764</td>
+                            <td>68963</td>
+                            <td>100000</td>
+                            <td>billing</td>
+                            <td>big</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+		</div>
+		<div class="modal-footer">
+		    <button type="button" class="btn btn-default" (click)="onCloseHandled()" >Close</button>
+		</div>
+	    </div><!-- /.modal-content -->
+	</div><!-- /.modal-dialog -->
+    </div>
+
+
+    <style>
+            .nav.nav-tabs{
+                display: block;
+            }
+            .table-striped>tbody>tr:nth-of-type(odd) {
+            background-color: #f9f9f9;
+             }
+             .table-striped{
+             border: 1px solid#f3efef;
+             width: 100%;
+             }
+             .table-striped>tbody>tr>td{
+                border-bottom: 1px solid #ddd;  
+             }
+             .table-striped>thead>tr{
+                color: #bbbbbb;
+                text-align: left;
+             }
+             .table-striped>thead>tr>th{
+                font-weight: 400;
+                padding: 7px 19px 7px 11px;
+             }
+             .table-striped>tbody>tr>td{
+                font-weight: 400;
+                padding: 7px 19px 7px 11px;
+             }
+             .spOne{
+             background: #29b7f1;
+             color: #fff !important;
+            }
+            .spOne > th{
+            border-bottom: 2px solid #038bc1;
+            }
+            .spOne > th>span{
+            background: #058ec4;
+            padding: 5px 11px 5px 11px;
+            margin-right: 3%;
+            }
+        
+        .img-thumbnail {
+            display: inline-block;
+            border-radius: 50%;
+           width: 80%;
+            height: 100%;
+            padding: 4px;
+            line-height: 1.42857143;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            -webkit-transition: all .2s ease-in-out;
+            -o-transition: all .2s ease-in-out;
+            transition: all .2s ease-in-out;
+        }
+        .panel-default{
+            margin-left: 3%;
+        }
+        .form-control {
+    display: block;
+    width: 100%;
+    height: 34px;
+    padding: 6px 12px;
+    font-size: 14px;
+    line-height: 1.42857143;
+    color: #555;
+    background-color: #fff;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    box-shadow: inset 0 1px 1px rgba(0,0,0,.075);
+    -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;
+    -o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
+}
+
+    .col-8 label{ white-space: nowrap;}
+    .panel-default[_ngcontent-c26] {
+    margin-left: 3%;
+}
+.panel-default {
+    border-color: #ddd;
+}
+.panel {
+    margin-bottom: 20px;
+    background-color: #fff;
+    border: 1px solid transparent;
+    border-radius: 4px;
+    -webkit-box-shadow: 0 1px 1px rgba(0,0,0,.05);
+    box-shadow: 0 1px 1px rgba(0,0,0,.05);
+}
+
+.panel {
+    border: .05rem solid #e7e9ed;
+    border-radius: .1rem;
+    display: -webkit-box;
+    display: flex;
+    display: -ms-flexbox;
+    -ms-flex-direction: column;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    flex-direction: column;
+}
+.panel-default>.panel-heading {
+    color: #fff;
+    background-color: #2274a5;
+    border-color: #ddd;
+}
+.panel-heading {
+    padding: 10px 15px;
+    border-bottom: 1px solid transparent;
+    border-top-left-radius: 3px;
+    border-top-right-radius: 3px;
+}
+.panel .panel-body {
+    -ms-flex: 1 1 auto;
+    -webkit-box-flex: 1;
+    flex: 1 1 auto;
+    overflow-y: auto;
+    padding: 0 .8rem;
+}
+.panel-body {
+    /* padding: 15px; */
+    padding: 10px 16px 10px 16px !important;
+}   
+.list-group {
+    /* padding-left: 0; */
+    margin-bottom: 20px;
+    padding: 0 0px 0 8px !important;
+}
+.list-group {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    padding-left: 0;
+    margin-bottom: 0;
+}
+.list-group-item:first-child {
+    border-top-left-radius: 4px;
+    border-top-right-radius: 4px;
+}
+.list-group-item:focus, .list-group-item:hover {
+    z-index: 1;
+    text-decoration: none;
+}
+.list-group-item:first-child {
+    border-top-left-radius: .25rem;
+    border-top-right-radius: .25rem;
+}
+.list-group-item {
+    position: relative;
+    display: block;
+    padding: 10px 15px;
+    margin-bottom: -1px;
+    background-color: #fff;
+    border: 1px solid #ddd;
+}
+.text-muted {
+    color: #777;
+}
+.text-muted {
+    color: #6c757d!important;
+}
+.list-group-item {
+    position: relative;
+    display: block;
+    padding: .75rem 1.25rem;
+    margin-bottom: -1px;
+    background-color: #fff;
+    border: 1px solid rgba(0,0,0,.125);
+}
+.btn-lg, .btn-group-lg > .btn {
+    padding: 0;
+    font-size: 1rem;
+    border-radius: 0.3rem;
+    width: 127px;
+    height: 40px;
+}
+.btn[_ngcontent-c7]:hover{
+    background-color: unset;
+    color:#000;
+    border: 0;
+}
+
+</style>
+        
+        

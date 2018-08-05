@@ -1,0 +1,395 @@
+.overlay {
+  position: fixed;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  z-index: 999;
+}
+.mat-input-underline{
+    height:2px !important;
+}
+.dialog {
+  z-index: 1000;
+  position: fixed;
+  right: 0;
+  left: 0;
+  top: 20px;
+  margin-right: auto;
+  margin-left: auto;
+  min-height: 200px;
+  width: 90%;
+  max-width: 520px;
+  background-color: #fff;
+  padding: 12px;
+  box-shadow: 0 7px 8px -4px rgba(0, 0, 0, 0.2), 0 13px 19px 2px rgba(0, 0, 0, 0.14), 0 5px 24px 4px rgba(0, 0, 0, 0.12);
+}
+
+@media (min-width: 768px) {
+  .dialog {
+    top: 40px;
+  }
+}
+
+.dialog__close-btn {
+  border: 0;
+  background: none;
+  color: #2d2d2d;
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  font-size: 1.2em;
+}
+
+.col-6 {
+display: -webkit-box;
+}
+$custom-radio-size: 20px;
+$custom-radio-border-width: 1px;
+$custom-radio-transition-speed: 100ms;
+$custom-radio-inset-shadow: inset 0 0.1em 1px -0.1em rgba(0, 0, 0, 0.3);
+
+$custom-radio-pip-color: dodgerblue;
+$custom-radio-pip-size: round($custom-radio-size * 0.6);
+
+// States
+$custom-radio-unchecked-bg: white;
+$custom-radio-unchecked-border: transparentize(gray, 0.6);
+
+$custom-radio-checked-bg: mix(
+  $custom-radio-unchecked-bg,
+  $custom-radio-pip-color,
+  60%
+);
+$custom-radio-checked-border: $custom-radio-pip-color;
+
+$custom-radio-active-inset-shadow: inset 0 0 2px 3px rgba(0, 0, 0, 0.1);
+
+$custom-radio-focus-shadow: 0 0 0 2px transparentize(dodgerblue, 0.5);
+
+$custom-radio-disabled-bg: lighten(black, 91.8%);
+$custom-radio-disabled-pip-color: lighten(black, 80%);
+
+// Check variable values
+@if ($custom-radio-size % 2 == 1) {
+  @error '$custom-radio-size must be even';
+}
+// round to nearest even number
+@if ($custom-radio-pip-size % 2 == 1) {
+  $custom-radio-pip-size: $custom-radio-pip-size - 1;
+}
+
+input[type="radio"] {
+  position: relative;
+  display: inline-block;
+
+  width: $custom-radio-size +10;
+  height: $custom-radio-size - 6;
+
+  border-radius: 100%;
+  outline: none !important;
+  -webkit-appearance: none;
+
+  // Radio
+  // -----
+
+  &::before {
+    position: relative;
+    top: -$custom-radio-border-width;
+    left: -$custom-radio-border-width;
+    display: block;
+    content: "";
+
+    background: $custom-radio-unchecked-bg;
+    border: $custom-radio-border-width solid $custom-radio-unchecked-border;
+    border-radius: 100%;
+    box-shadow: $custom-radio-inset-shadow;
+
+    width: $custom-radio-size;
+    height: $custom-radio-size;
+  }
+
+  &:active::before {
+    box-shadow: $custom-radio-inset-shadow, $custom-radio-active-inset-shadow;
+  }
+
+  &:focus::before {
+    box-shadow: $custom-radio-inset-shadow, $custom-radio-focus-shadow;
+  }
+
+  &:checked::before {
+    background: $custom-radio-checked-bg;
+    border-color: $custom-radio-checked-border;
+  }
+
+  &:disabled::before {
+    cursor: not-allowed;
+    background-color: $custom-radio-disabled-bg;
+    border-color: transparentize($custom-radio-unchecked-border, 0.2);
+  }
+
+  // Radio Pip
+  // ---
+
+  &::after {
+    position: relative;
+    top: -($custom-radio-size / 2) - $custom-radio-border-width;
+    left: ($custom-radio-size / 2) - $custom-radio-border-width;
+
+    display: block;
+    content: "";
+
+    background: $custom-radio-pip-color;
+    border-radius: 100%;
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+
+    width: 0;
+    height: 0;
+  }
+
+  &:checked::after {
+    transition: all ease-in-out $custom-radio-transition-speed 0;
+
+    top: floor(
+      - ($custom-radio-size / 2) - ($custom-radio-pip-size / 2) -
+        $custom-radio-border-width - 0
+    );
+
+    left: floor(
+      + ($custom-radio-size / 2) - ($custom-radio-pip-size / 2) -
+        $custom-radio-border-width - 8
+    );
+
+    width: $custom-radio-pip-size;
+    height: $custom-radio-pip-size;
+  }
+
+  &:disabled::after {
+    background: $custom-radio-disabled-pip-color;
+  }
+}
+
+input + input {
+  margin-left: 0.5em;
+}
+.col-form-label {
+    font-size: 15px;
+    width: 156px;
+    color: rgba(0, 0, 0, 0.69);
+    width: 156px;
+    font-family: cursive;
+    font-weight: 600;
+}
+
+.radio-group > label{
+        width: 167px;
+}
+
+th,td,.datatable-header-cell *{
+        text-align: center;
+}
+.ngx-datatable.material .empty-row{
+        text-align: inherit;
+}
+
+.table {
+    border: 1px solid #eceeef;
+}
+
+.pre1 {
+    margin-left: 200px;
+    margin-right: 21px;
+}
+
+.datatable-header.ng-star-inserted{
+        background-color: #bed4e17a;
+}
+.sp-wid{
+    width:230px;
+}
+
+.datatable-row-center.ng-star-inserted{
+        border: 6px solid rgb(255, 255, 255);
+}
+.ngx-datatable.material .datatable-header .datatable-header-cell{
+        padding: .6rem 1.2rem;
+}
+
+
+.gradient-45deg-light-blue-cyan {
+  background: #0288d1;
+  background: -webkit-linear-gradient(45deg, #0288d1 0%, #26c6da 100%);
+  background: linear-gradient(45deg, #0288d1 0%, #26c6da 100%);
+}
+
+.waves-effect {
+    position: relative;
+    cursor: pointer;
+    display: inline-block;
+    overflow: hidden;
+    border-radius: 4px !important;
+    user-select: none;
+    -webkit-tap-highlight-color: transparent;
+    vertical-align: middle;
+    z-index: 1;
+    transition: .3s ease-out;
+    min-width:auto;
+    font-weight: 600;
+        color: #fff;
+        box-shadow: 0 2px 2px 0 rgba(0, 0, 0, 0.14), 0 1px 5px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -2px rgba(0, 0, 0, 0.2);
+}
+.gradient-45deg-green-teal.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(77, 182, 172, 0.5);
+}
+
+.gradient-45deg-green-teal {
+    background: #43A047;
+    background: -webkit-linear-gradient(45deg, #43A047 0%, #1de9b6 100%);
+    background: linear-gradient(45deg, #43A047 0%, #1de9b6 100%);
+}
+
+.btn, .btn-large {
+    text-decoration: none;
+    color: #fff;
+    text-align: center;
+    letter-spacing: .5px;
+    transition: .2s ease-out;
+    cursor: pointer;
+}
+
+
+
+
+.modal-dialog {
+    min-width: 800px;
+    max-width: 900px;
+    margin: 30px auto;
+}
+.modal-content {
+    max-width: 800px;
+}
+
+
+table thead th,table tbody td{
+    text-align: center;
+}
+
+.silk-card-content{
+    padding:0px;
+}
+
+.mb-3.img-circle{
+    border: 3px solid #eceeef;
+    height: 139px;
+}
+.gradient-45deg-purple-deep-orange.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(255, 110, 64, 0.5);
+}
+.btn:hover, .btn-large:hover {
+    background-color: #ff5a92;
+}
+.z-depth-1-half, .btn:hover, .btn-large:hover, .btn-floating:hover {
+    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 7px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -1px rgba(0, 0, 0, 0.2);
+}
+a:active, a:hover {
+    outline: 0;
+}
+.gradient-45deg-purple-deep-orange {
+    background: #8e24aa;
+    background: -webkit-linear-gradient(45deg, #8e24aa 0%, #ff6e40 100%);
+    background: linear-gradient(45deg, #8e24aa 0%, #ff6e40 100%);
+}
+
+.gradient-45deg-amber-amber.gradient-shadow {
+    box-shadow: 0 6px 20px 0 rgba(255, 111, 0, 0.3);
+}
+.btn:hover, .btn-large:hover {
+    background-color: #ff5a92;
+}
+.z-depth-1-half, .btn:hover, .btn-large:hover, .btn-floating:hover {
+    box-shadow: 0 3px 3px 0 rgba(0, 0, 0, 0.14), 0 1px 7px 0 rgba(0, 0, 0, 0.12), 0 3px 1px -1px rgba(0, 0, 0, 0.2);
+}
+a:active, a:hover {
+    outline: 0;
+}
+.gradient-45deg-amber-amber {
+    background: #ff6f00;
+    background: -webkit-linear-gradient(45deg, #ff6f00 0%, #ffca28 100%);
+    background: linear-gradient(45deg, #ff6f00 0%, #ffca28 100%);
+}
+.mat-divider {
+   margin-bottom: 15px;
+}
+
+
+
+.theme-options.mat-card-content{
+    direction: initial;
+}
+.dataIcon{
+    display: -webkit-inline-box;
+    width: 100%;
+    vertical-align: inherit;
+        margin-right: 29%;
+}
+.dataIcon span{
+    width: 45%;
+    display: block;
+}   
+ .forProf {
+    color: #2274a5;
+    margin-left: 2%;
+    font-size: xx-large;
+}
+.nav-item >a>span{
+        font-size: 15px;
+    font-weight: 600;
+}
+.myDiv{
+        background-color: #eee;
+    border: 3px dotted #c8c8c8;
+    display: block;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border-radius: 8px;
+    z-index: 1;
+}
+
+
+
+
+.ui-confirmdialog {
+    width: 30em;
+}
+.ui-dialog {
+    position: fixed;
+    padding: 0;
+}
+.ui-shadow {
+    -webkit-box-shadow: 0 1px 3px 0 rgba(0,0,0,.3);
+    box-shadow: 0 1px 3px 0 rgba(0,0,0,.3);
+}
+.ui-widget, .ui-widget * {
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+}
+.ui-corner-all {
+    -moz-border-radius: 3px;
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
+}
+
+input.ng-invalid.ng-touched, 
+select.ng-invalid.ng-touched{
+    border: 1px solid red;
+}
+
+.odd {
+    background-color: #d4e9fc;
+
+}
+.even {
+    background-color: white;
+}
+

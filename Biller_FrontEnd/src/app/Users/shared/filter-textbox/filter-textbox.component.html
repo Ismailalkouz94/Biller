@@ -1,0 +1,10 @@
+<form>
+<div class="form-group row">
+    <label for="example-search-input" class="col-2 col-form-label">فلترة النتائج : </label>
+	<div class="col-4">
+        <input class="form-control" type="text" name="filter"
+            [(ngModel)]="model.filter" 
+            (keyup)="filterChanged($event)"  />
+	</div>
+</div>    
+</form>

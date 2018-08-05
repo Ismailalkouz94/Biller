@@ -1,0 +1,169 @@
+<div class="silk-card border-primary">
+    <div class="silk-card">
+        <div class="silk-card-title">
+            <div class="silk-head">
+                <div class="silk-pre">
+                    <h4>استعلام الفواتير المرسلة</h4>
+
+                    <a routerLink="/invoice/add-invoice">
+                        <button type="button" class="btn waves-effect waves-light gradient-45deg-green-teal gradient-shadow" >اضافة فاتورة جديدة</button>
+                    </a>
+
+
+                    <md-divider>
+
+                    </md-divider>
+                </div>
+            </div>
+            <div class="silk-card-content">
+                <!-- <button type="button" class="btn waves-effect waves-light gradient-45deg-amber-amber gradient-shadow" >مشاهدة</button> -->
+
+
+                <form [formGroup]="form" (ngSubmit)="findByCriteria(form.value)">
+
+                    <div class="form-group row">
+                        <label for="example-search-input" class="col-2 col-form-label">
+                            رقم الفاتورة
+                        </label>
+                        <div class="col-4">
+                            <input class="form-control" type="text" [formControl]="form.controls['invoiceId']">
+                        </div>
+                        <label for="example-email-input" class="col-2 col-form-label">
+                             رقم الإشتراك</label>
+                        <div class="col-4">
+                            <input class="form-control" type="text" id="example-email-input" [formControl]="form.controls['referenceNumber']">
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label for="example-email-input" class="col-2 col-form-label">
+                            الوصف
+                        </label>
+                        <div class="col-4">
+                            <input class="form-control" type="text" id="example-email-input" [formControl]="form.controls['description']">
+                        </div>
+                    </div>
+                    <div (click)="toggle()" id="bt" class="toggle-SL">
+                        <md-icon>{{arraw}}</md-icon> {{buttonName}}
+                    </div>
+                    <md-divider></md-divider>
+                    <ng-container *ngIf="show">
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-2 col-form-label">
+                                تاريخ الفاتورة</label>
+                            <div class="col-4">
+                                <input class="form-control" type="date" id="example-email-input" [formControl]="form.controls['invoiceDate']">
+                            </div>
+                            <label for="example-email-input" class="col-2 col-form-label">
+                                تاريخ دفع الفاتورة </label>
+                            <div class="col-4">
+                                <input class="form-control" type="date" id="example-email-input" [formControl]="form.controls['paidDate']">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-2 col-form-label">
+                                الى طرف معرف</label>
+                            <div class="col-4">
+                                <select class="form-control" [formControl]="form.controls['toPartyId']">
+                                    <option *ngFor="let party of sentToList" [ngValue]="party[0]">{{party[1]}}</option>
+                                </select>
+
+
+                            </div>
+                            <label for="example-email-input" class="col-2 col-form-label">
+                                الى العميل الزبون</label>
+                            <div class="col-4">
+                                <input class="form-control" type="text" id="example-email-input" [formControl]="form.controls['toName']">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-2 col-form-label">
+                                رقم الطلب</label>
+                            <div class="col-4">
+                                <input class="form-control" type="text" id="example-email-input" [formControl]="form.controls['orderId']">
+                            </div>
+                            <label for="example-email-input" class="col-2 col-form-label">
+                                تاريخ الاستحقاق</label>
+                            <div class="col-4">
+                                <input class="form-control" type="date" id="example-email-input" [formControl]="form.controls['dueDate']">
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <label for="example-email-input" class="col-2 col-form-label">
+                                حالة الفاتورة</label>
+                            <div class="col-4">
+                                <select class="form-control" [formControl]="form.controls['statusId']">
+                                    <option *ngFor="let status of invoiceStatuslist" [ngValue]="status.globalItemId">
+                                        {{status.description}}
+                                    </option>
+                                </select>
+                            </div>
+                        </div>
+                    </ng-container>
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <button class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow" type="submit">
+                            <!-- <button md-button  type="submit"> -->
+                                بحث
+                            </button>
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+            <div class="form-group row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-2" widget>
+
+                    <div class="silk-card-content widget-body">
+
+                        <ngx-table
+                        [configuration]="configurationAdvanced"
+                        [data]="invoiceList"
+                        [columns]="columns">                 
+                        <ng-template let-invoice>
+                           
+                            <td scope="row">
+                                <span class="spanWidth">
+                                    <a routerLink="/invoice/update-invoice" (click)="update(invoice.invoiceId)">{{invoice.invoiceId}}</a>
+                                </span>
+                            </td>
+                            <td>{{invoice.referenceNumber}}</td>
+                            <td>{{invoice.description}} </td>
+                            <td> {{invoice.status.description}}</td>
+                            <td> {{invoice.invoiceDate | date: 'dd/MM/yyyy'}}</td>
+                            <td> {{invoice.dueDate | date: 'dd/MM/yyyy'}}</td>
+                            <td *ngIf="invoice.paidDate">{{invoice.paidDate | date: 'dd/MM/yyyy'}}</td>
+                            <td *ngIf="!invoice.paidDate">-</td>
+                            <td *ngIf="invoice.toParty">{{invoice.toParty.partyGroup.tradeName}}</td>
+                            <td *ngIf="!invoice.toParty">-</td>
+                            <td *ngIf="invoice.toName">{{invoice.toName}}</td>
+                            <td *ngIf="!invoice.toName">-</td>
+                            <td *ngIf="invoice.order"> {{invoice.order.description}}</td>
+                            <td *ngIf="!invoice.order">-</td>
+                            <td>{{totalPrice(invoice.invoiceItem)}}</td>
+                            <td>
+                                <md-icon (click)="update(invoice.invoiceId)" mdTooltip="edit">edit</md-icon>
+                                <md-icon (click)="openConfirmationDialog(invoice.invoiceId)" mdTooltip="delete">delete</md-icon>
+                                <md-icon *ngIf="invoice.toParty && invoice.status.globalItemId != 'INVOICE_UNPAID' " (click)="sentInvoice(invoice,totalPrice(invoice.invoiceItem))"
+                                    mdTooltip="send">send</md-icon>
+
+                            </td>
+                            <td>
+                                <md-icon (click)="invoiceDetailsReport(invoice.invoiceId)" mdTooltip="تفصيلي">line_style</md-icon>
+                            </td>
+                            </ng-template>
+                      </ngx-table>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+  
+         
+
+   
+<!-- </app-dialog> -->

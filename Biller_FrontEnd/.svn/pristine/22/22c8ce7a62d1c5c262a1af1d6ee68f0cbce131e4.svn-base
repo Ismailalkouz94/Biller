@@ -1,0 +1,151 @@
+<div class="silk-card border-primary">
+     <div class="silk-card">
+            <div class="silk-card-title">
+                <div class="silk-head">
+                    <div class="silk-pre">
+                        <h4>شاشة رفع الفواتير</h4>
+                    </div>
+                </div>
+                <md-divider></md-divider>
+            </div>
+            <div class="silk-card-content">
+	   <tabset>
+               <tab heading="تحميل بصيغة ملف اكسل">
+		   <div class="row">
+			<div class="pr-1 col-xs-12 col-sm-2 col-md-2 col-lg-2 pre1">
+			    <input class="form-control sp-wid" type="file" ng2FileSelect [uploader]="uploader" multiple /><br/>
+
+			    <div class="clearfix"></div>
+			</div>
+			<div class="pr-1 col-xs-12 col-sm-8 col-md-8 col-lg-8">
+			    <div class="pad-wrap">
+
+				<h6>
+				    <span>عدد الرفع: {{ uploader?.queue?.length }}</span>
+				</h6>
+
+				<ngx-datatable class="material ml-0 mr-0 mb-3" [rows]="uploader.queue" [columnMode]="'flex'" [headerHeight]="50" [footerHeight]="0" [rowHeight]="'auto'">
+				    <ngx-datatable-column name="الاسم" [flexGrow]="2">
+					<ng-template let-row="row" ngx-datatable-cell-template>
+					    {{ row?.file?.name }}
+					</ng-template>
+				    </ngx-datatable-column>
+				    <ngx-datatable-column name="الحجم" *ngIf="uploader.options.isHTML5" [flexGrow]="1">
+					<ng-template let-row="row" ngx-datatable-cell-template>
+					    {{ row?.file?.size/1024/1024 | number:'.2' }} MB
+					</ng-template>
+				    </ngx-datatable-column>
+				    <ngx-datatable-column name="العملية" *ngIf="uploader.options.isHTML5" [flexGrow]="1">
+					<ng-template let-row="row" ngx-datatable-cell-template>
+					    <md-progress-bar mode="determinate" value="{{row.progress}}"></md-progress-bar>
+					</ng-template>
+				    </ngx-datatable-column>
+				    <ngx-datatable-column name="حالة" [flexGrow]="1">
+					<ng-template let-row="row" ngx-datatable-cell-template>
+					    <span *ngIf="row.isSuccess"><md-icon>check</md-icon></span>
+					    <span *ngIf="row.isCancel"><md-icon>الغاء</md-icon></span>
+					    <span *ngIf="row.isError"><md-icon>حذف</md-icon></span>
+					</ng-template>
+				    </ngx-datatable-column>
+				    <ngx-datatable-column name="حدث" [flexGrow]="2">
+					<ng-template let-row="row" ngx-datatable-cell-template>
+					    <button md-raised-button md-button-sm type="button" (click)="row.upload()" [disabled]="row.isReady || row.isUploading || row.isSuccess">رفع</button>
+					    <button md-raised-button md-button-sm type="button" (click)="row.cancel()" [disabled]="!row.isUploading">الغاء</button>
+					    <button md-raised-button md-button-sm type="button" (click)="row.remove()">حذف
+		  </button>
+					</ng-template>
+				    </ngx-datatable-column>
+				</ngx-datatable>
+
+				<div class="mb-3">
+				    <p>عملية الرفع : </p>
+				    <md-progress-bar mode="determinate" value="{{uploader.progress}}"></md-progress-bar>
+				</div>
+				<button md-raised-button md-button-sm type="button" (click)="uploader.uploadAll()" [disabled]="!uploader.getNotUploadedItems().length">رفع الكل</button>
+				<button md-raised-button md-button-sm type="button" (click)="uploader.cancelAll()" [disabled]="!uploader.isUploading">الغاء الكل</button>
+				<button md-raised-button md-button-sm type="button" (click)="uploader.clearQueue()" [disabled]="!uploader.queue.length">حذف الكل</button>
+			    </div>
+			</div>
+		    </div>
+	       </tab>
+               <tab heading="ادخال بيانات الفاتورة">
+		  <form>
+		    <div class="form-group row">
+			<label for="example-search-input" class="col-2 col-form-label">اسم الشركة المراد فوترتها</label>
+			<div class="col-4">
+			    <input class="form-control" type="text" placeholder="Amazon">
+			</div>
+			<label for="example-email-input" class="col-2 col-form-label">رقمها</label>
+			<div class="col-4">
+			    <input class="form-control" type="text" placeholder="123456789" id="example-email-input">
+			</div>
+		    </div>
+		    <div class="form-group row">
+			    <label for="example-url-input" class="col-2 col-form-label">الحد الأدنى المسموح </label>
+			    <div class="col-4">
+				<input class="form-control" type="text" placeholder="100" id="example-url-input">
+			    </div>
+			    <label for="example-tel-input" class="col-2 col-form-label">الحد الأعلى</label>
+			    <div class="col-4">
+				<input class="form-control" type="text" placeholder="1000" id="example-tel-input">
+			    </div>
+		    </div>
+		    <div class="form-group row">
+			<label for="example-number-input" class="col-2 col-form-label">امكانية الدفع الجزئي</label>    
+			<div class="col-4">
+			    <input class="form-control" type="text" placeholder="ممكن" id="example-biller-input">
+			</div>
+			<label for="example-number-input" class="col-2 col-form-label">حالة الفاتورة</label>    
+			<div class="col-4">
+			    <select class="form-control" type="text">
+				<option>مدفوع</option>
+				<option>مدفوع جزئي</option>
+				<option>غير مدفوع</option>
+			    </select>
+			</div>
+		    </div>
+		    <div class="form-group row">
+			<div class="col-12">
+			    <button class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow" type="submit">ترحيل</button>
+			</div>
+		    </div>
+		    <div class="form-group row">
+			    <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-2" widget>
+					<div class="silk-card-content widget-body">
+					    <table class="table">
+						<thead class="thead-default">
+						    <tr>
+							<th>رقم الفاتورة</th>
+							<th>الحد الأدنى</th>
+							<th>الحد الأعلى</th>
+							<th>دفع جزئي</th>
+							<th>تاريخ الترحيل</th>
+						    </tr>
+						</thead>
+						<tbody>
+						    <tr>
+							<th scope="row">123456789</th>
+							<td>100</td>
+							<td>1000</td>
+							<td>102</td>
+							<td>12/8/2018</td>
+						    </tr>
+						    <tr>
+							<th scope="row">1234887</th>
+							<td>105</td>
+							<td>1111</td>
+							<td>621</td>
+							<td>3/9/2018</td>
+						    </tr>
+						</tbody>
+					    </table>
+					</div>
+				</div>
+		    </div>
+		   </form>
+	       </tab>
+            </tabset>           
+            </div>
+        </div>
+</div>
+

@@ -1,0 +1,130 @@
+<div class="silk-card border-primary">
+	<div class="silk-card">
+		<div class="silk-card-title">
+			<div class="silk-head">
+				<div class="silk-pre">
+					<h4>الشركات المسجلة في الاردن</h4>
+					<!-- <a routerLink="/person"><button type="button" class="btn waves-effect waves-light gradient-45deg-green-teal gradient-shadow">اضافة مستخدم جديد</button> </a> -->
+					<md-divider></md-divider>
+				</div>
+			</div>
+			<div class="silk-card-content">
+				<form>
+					<div class="form-group row">
+						<label for="example-search-input" class="col-2 col-form-label">رقم الشركة </label>
+						<div class="col-4">
+							<input class="form-control" type="text">
+						</div>
+						<label for="example-search-input" class="col-2 col-form-label">اسم الشركة</label>
+						<div class="col-4">
+							<input class="form-control" type="text">
+						</div>
+					</div>
+										<div class="form-group row">
+						<label for="example-search-input" class="col-2 col-form-label">نوع الشركة </label>
+						<div class="col-4">
+							<select class="form-control"  [formControl]="form.controls['companyType']" >
+								<option value="">الكل</option>
+									<option *ngFor="let item of companyType" [ngValue]="item.id">{{item.description}}</option>
+								</select>
+						</div>
+
+					</div>
+					<div class="form-group row">
+						<div class="col-12">
+							<button class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow" type="submit">
+								بحث
+							</button>
+
+						</div>
+					</div>
+				</form>
+			</div>
+	
+
+			<div class="form-group row">
+                <div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-2" widget>
+
+                    <div class="silk-card-content widget-body">
+
+                        <ngx-table
+                        [configuration]="configurationAdvanced"
+                        [data]="partyGroupList"
+                        [columns]="columns">                 
+                        <ng-template let-party >
+                           
+							<td   scope="row">
+								<span class="spanWidth">
+									<a routerLink="#">{{party.partyId}}</a>
+								</span>
+							</td>
+							<td >{{party.commericalRegistrationNum}}</td>
+							<td > {{party.partyGroupName}}</td>
+							<td >{{party.companyType.description}} </td>
+										 
+							<td > {{party.partyCapital}}</td>
+						  
+	 
+							<td >
+								<md-icon (click)="add(party.partyId)" mdTooltip="تفضيل">favorite_border</md-icon>
+								</td>
+						
+                          
+                         
+						
+                            </ng-template>
+                      </ngx-table>
+                    </div>
+
+                </div>
+			</div>
+				
+		
+			<div class="silk-head">
+					<div class="silk-pre">
+						<h4>الشركات المضافة لقائمتي</h4>
+						<!-- <a routerLink="/person"><button type="button" class="btn waves-effect waves-light gradient-45deg-green-teal gradient-shadow">اضافة مستخدم جديد</button> </a> -->
+						<md-divider></md-divider>
+					</div>
+				</div>
+
+
+				<div class="form-group row">
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-2" widget>
+	
+						<div class="silk-card-content widget-body">
+	
+							<ngx-table
+							[configuration]="configurationAdvanced"
+							[data]="favPartyList"
+							[columns]="columns">                 
+							<ng-template let-partyGroup>
+								<td scope="row">
+									<span class="spanWidth">
+										<a routerLink="#">{{partyGroup.party.partyGroup.partyGroupId}}</a>
+									</span>
+								</td>
+								<td>{{partyGroup.party.partyGroup.commericalRegistrationNum}}</td>
+								<td> {{partyGroup.party.partyGroup.partyGroupName}}</td>
+								<td>{{partyGroup.party.partyGroup.companyType.description}} </td>
+								
+					 
+								<td> {{partyGroup.party.partyGroup.partyCapital}}</td>
+								<td>
+									<md-icon (click)="delete(partyGroup)" mdTooltip="ازالة ">delete</md-icon>
+									</td>
+							
+							
+							  
+							 
+							   
+								</ng-template>
+						  </ngx-table>
+						</div>
+	
+					</div>
+				</div>
+			
+		</div>
+	</div>
+</div>

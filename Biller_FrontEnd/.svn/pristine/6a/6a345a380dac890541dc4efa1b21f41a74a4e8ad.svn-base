@@ -1,0 +1,220 @@
+<!-- <div class="clearfix d-flex height-full justify-content-center form-bg">
+        <ngx-loading [show]="loading" [config]="{ animationType: ANIMATION_TYPES.rectangleBounce
+         
+      }"></ngx-loading>
+      
+    <div class="col-xs-12 col-sm-11 col-md-8 align-self-center col-lg-4">
+        <div class="silk-login-wrapper">
+              
+            <div>
+                <div class="bg-primary pb-3 pt-3">
+                    <div class="login-logo justify-content text-center">
+                        <h2>شاشة الدخول</h2>
+                    </div>
+                </div>
+
+
+
+                <div class="pl-3 pt-3 pb-3 pr-3">
+                       
+                    <p class="text-center">
+                        <strong>ادخل تفاصيل الدخول</strong>
+                    </p>
+                    <form [formGroup]="formdata" (ngSubmit)="login(formdata.value)">
+                        <fieldset>
+                            <div class="form-group">
+                                <label for="TextInput">اسم المستخدم</label>
+                                <input type="text" [formControl]="formdata.controls['userName']"   class="form-control" i>
+                                <small class="silk-block" *ngIf="formdata.controls['userName'].hasError('required') && formdata.controls['userName'].touched"
+                                    class="mat-text-warn">
+                                الرجاء ادخال اسم المستخدم 
+                                </small>
+                            </div>
+                            <div class="form-group">
+                                <label for="TextInput">الرقم السري</label>
+                                <input type="password" [formControl]="formdata.controls['password']"  class="form-control" >
+                                <small class="silk-block" *ngIf="formdata.controls['password'].hasError('required') && formdata.controls['password'].touched"
+                                    class="mat-text-warn">
+                                    الرجاء ادخال  كلمة المرور 
+
+                                </small>
+                            </div>
+                            <div class="form-group">
+                                <label for="TextInput">رقم المنشأة</label>
+                                <input type="bnu"  [formControl]="formdata.controls['partyId']"  class="form-control" >
+                                <small class="silk-block" *ngIf="formdata.controls['partyId'].hasError('required') && formdata.controls['partyId'].touched"
+                                    class="mat-text-warn">
+                                    الرجاء ادخال  رقم المنشأه
+                                </small>
+                            </div>
+                            <button type="submit" class="btn btn-primary"  [disabled]="!formdata.valid">دخول</button>
+                        </fieldset>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+   
+</div> -->
+
+<div id="mainCon">
+        <ngx-loading [show]="loading" [config]="{ animationType: ANIMATION_TYPES.rectangleBounce
+         
+        }"></ngx-loading>
+<div class="form">
+  <div class="form-toggle"></div>
+  <div class="form-toggle2"></div>
+  <div class="form-panel one">
+    <div class="form-header">
+      <h1>Business Edge</h1>
+    </div>
+    <div class="form-content">
+           
+      <form  [formGroup]="formdata" (ngSubmit)="login(formdata.value)">
+        <div class="form-group">
+          <label for="username">Username</label>
+          <input type="text" id="username" name="username" required="required" [formControl]="formdata.controls['userName']"/>
+          <div class="consmall">
+            <small class="silk-block" *ngIf="formdata.controls['userName'].hasError('required') && formdata.controls['userName'].touched"
+                class="mat-text-warn">
+            الرجاء ادخال اسم المستخدم 
+            </small>  
+            </div>   
+        </div>
+        <div class="form-group">
+          <label for="password">Password</label>
+          <input type="password" id="password" name="password" required="required" [formControl]="formdata.controls['password']"/>
+          <div class="consmall"><small class="silk-block" *ngIf="formdata.controls['password'].hasError('required') && formdata.controls['password'].touched"
+              class="mat-text-warn">
+              الرجاء ادخال  كلمة المرور 
+      
+          </small>
+         </div> 
+        </div>
+        <div class="form-group">
+          <label for="password">PartyId</label>
+          <input type="text" id="partyid" name="partyid" required="required" [formControl]="formdata.controls['partyId']"/>
+          <div class="consmall">
+              <small class="silk-block" *ngIf="formdata.controls['partyId'].hasError('required') && formdata.controls['partyId'].touched"
+                class="mat-text-warn">
+                الرجاء ادخال  رقم المنشأه
+            </small>
+          </div>  
+        </div>
+        <!-- <div class="form-group">
+          <label class="form-remember">
+            <input type="checkbox"/>Remember Me
+          </label><a class="form-recovery" href="#">Forgot Password?</a>
+        </div> -->
+        <div class="form-group">
+          <button type="submit" [disabled]="!formdata.valid">Log In</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="form-panel two" title="Register Party Group">
+    <div class="form-header">
+      <h1>Register Party Group</h1>
+    </div>
+    <div class="form-content">
+      <form>
+        <div class="form-group">
+          <div class="col-6 colone">
+              <label for="username">Party Group Name</label>
+              <input type="text"  name="username" required="required"/>
+          </div>
+          <div class="col-6 coltwo">
+              <label for="password">Commercial Register Id</label>
+              <input type="text"  name="password" required="required"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-6 colone">
+              <label for="cpassword">City</label>
+              <input type="text" name="cpassword" required="required"/>
+          </div>
+          <div class="col-6 coltwo">
+              <label for="email">Mobile</label>
+              <input type="text"  name="email" required="required"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-6 colone">
+              <label for="email">Phone</label>
+              <input type="text"  name="email" required="required"/>
+          </div>
+          <div class="col-6 coltwo">
+              <label for="email">Email</label>
+              <input type="text"  name="email" required="required"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="col-6 colone">
+              <label for="username">Username</label>
+              <input type="text" id="username" name="username" required="required"/>
+          </div>
+          <div class="col-6 coltwo">
+              <label for="password">Password</label>
+              <input type="password" id="password" name="password" required="required"/>
+          </div>
+        </div>
+        <div class="form-group">
+          <button type="submit">Register</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <div class="form-panel three" title="Register Person">
+    <div class="form-header">
+      <h1>Register Person</h1>
+    </div>
+    <div class="form-content">
+      <form>
+          <div class="form-group">
+              <div class="col-6 colone">
+                  <label for="username">First Name</label>
+                  <input type="text"  name="username" required="required"/>
+              </div>
+              <div class="col-6 coltwo">
+                  <label for="password">Last Name</label>
+                  <input type="text"  name="password" required="required"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-6 colone">
+                  <label for="cpassword">Gender</label>
+                  <input type="text" name="cpassword" required="required"/>
+              </div>
+              <div class="col-6 coltwo">
+                  <label for="email">Phone</label>
+                  <input type="text"  name="email" required="required"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-6 colone">
+                  <label for="email">Mobile</label>
+                  <input type="text"  name="email" required="required"/>
+              </div>
+              <div class="col-6 coltwo">
+                  <label for="email">City</label>
+                  <input type="text"  name="email" required="required"/>
+              </div>
+            </div>
+            <div class="form-group">
+              <div class="col-6 colone">
+                  <label for="username">Username</label>
+                  <input type="text" id="username" name="username" required="required"/>
+              </div>
+              <div class="col-6 coltwo">
+                  <label for="password">Password</label>
+                  <input type="password" id="password" name="password" required="required"/>
+              </div>
+            </div>
+        <div class="form-group">
+          <button type="submit">Register</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+</div>

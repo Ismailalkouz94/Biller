@@ -1,0 +1,102 @@
+<ngx-loading [show]="loading"> <!--[config]="{ animationType: ANIMATION_TYPES}"-->
+</ngx-loading>
+<div class="silk-card border-primary">
+	<div class="silk-card">
+		<div class="silk-card-title">
+			<div class="silk-head">
+				<div class="silk-pre">
+					<h4>اطراف </h4>
+					<!-- <a routerLink="/person"><button type="button" class="btn waves-effect waves-light gradient-45deg-green-teal gradient-shadow">اضافة مستخدم جديد</button> </a> -->
+					<md-divider></md-divider>
+				</div>
+			</div>
+			<div class="silk-card-content">
+
+			</div>
+			<div class="form-group row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-2" widget>
+					<div class="silk-card-content widget-body">
+
+						<ngx-table [configuration]="configurationAdvanced" [data]="partiesList" [columns]="columns">
+							<ng-template let-partiesList>
+								<th scope="row">
+									{{partiesList.partyId}}
+								</th>
+								<td *ngIf="partiesList.partyGroup">{{partiesList.partyGroup.tradeName}} </td>
+								<td *ngIf="!partiesList.partyGroup">-</td>
+								<td>{{partiesList.description}} </td>
+								<td>
+									<button *ngIf="partiesList.isActive == 'N'" type="button" class="btn waves-effect waves-light gradient-45deg-green-teal gradient-shadow"
+									 (click)="activate(partiesList.partyId , 'Y')" disabled="{{buttonDisabled}}" label="Confirm">تفعيل</button>
+									<button *ngIf="partiesList.isActive == 'Y'" type="button" class="btn waves-effect waves-light gradient-45deg-amber-amber gradient-shadow"
+									 (click)="activate(partiesList.partyId , 'N')" disabled="{{buttonDisabled}}" label="Confirm">الغاء التفعيل</button>
+								</td>
+
+							</ng-template>
+						</ngx-table>
+
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- .... -->
+
+<div *ngIf="firstDialog" class="modal-dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" aria-label="Close" (click)="closeFirstDialog()">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">ادخال اسم المستخدم</h4>
+			</div>
+
+			<div class="form-group row">
+				<label for="example-email-input" class="col-2 col-form-label">
+					اسم المستخدم </label>
+				<div class="col-4">
+					<input class="form-control" [(ngModel)]="userName" type="text" id="example-email-input" >
+				</div>
+				<button type="button" class="btn waves-effect waves-light gradient-45deg-green-teal gradient-shadow"
+									 (click)="createDefaultUserLogin()" disabled="{{buttonDisabled}}" label="Confirm">حفظ</button>
+			</div>
+
+			<div class="modal-footer">
+				<button (click)="closeFirstDialog()" class="btn">Close</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+<div *ngIf="secondDialog" class="modal-dialog">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button type="button" class="close" aria-label="Close" (click)="closeFirstDialog()">
+					<span aria-hidden="true">&times;</span>
+				</button>
+				<h4 class="modal-title">اختيار صلاحيات المستخدم</h4>
+			</div>
+
+			<div class="form-group row">
+				<label for="example-email-input" class="col-2 col-form-label">
+					اسم المجموعه </label>
+				<div class="col-4">
+					<select class="form-control" [(ngModel)]="roleGroupId">
+						<option *ngFor="let item of roleGroup"  [ngValue]="item.roleGroupId">{{item.description}}</option>
+					</select>
+				</div>
+				<button type="button" class="btn waves-effect waves-light gradient-45deg-green-teal gradient-shadow"
+									 (click)="createRoleGroup()" disabled="{{buttonDisabled}}" label="Confirm">حفظ</button>
+			</div>
+
+			<!-- <div class="modal-footer">
+				<button (click)="closeFirstDialog()" class="btn">Close</button>
+			</div> -->
+		</div>
+	</div>
+</div>

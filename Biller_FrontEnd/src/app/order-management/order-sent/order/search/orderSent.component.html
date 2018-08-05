@@ -1,0 +1,224 @@
+<div class="silk-card border-primary">
+	<div class="silk-card">
+		<div class="silk-card-title">
+			<div class="silk-head">
+				<div class="silk-pre">
+					<h4>استعلام الطلبات المرسله</h4>
+
+					<a routerLink="/order/add-order">
+						<button type="button" class="btn waves-effect waves-light gradient-45deg-green-teal gradient-shadow">اضافة طلب جديد</button>
+					</a>
+
+					<md-divider>
+
+					</md-divider>
+				</div>
+			</div>
+			<div class="silk-card-content">
+				<!-- <button type="button" class="btn waves-effect waves-light gradient-45deg-amber-amber gradient-shadow" >مشاهدة</button> -->
+
+
+				<form [formGroup]="form" (ngSubmit)="findByCriteria(form.value)">
+
+					<div class="form-group row">
+						<label for="example-search-input" class="col-2 col-form-label">
+							رقم الطلب
+						</label>
+						<div class="col-4">
+							<input class="form-control" type="text" [formControl]="form.controls['orderId']">
+						</div>
+						<label for="example-search-input" class="col-2 col-form-label">
+							اسم الطلب
+						</label>
+						<div class="col-4">
+							<input class="form-control" type="text" [formControl]="form.controls['name']">
+						</div>
+					</div>
+					<div class="form-group row">
+						<label for="example-email-input" class="col-2 col-form-label">
+							الوصف
+						</label>
+						<div class="col-4">
+							<input class="form-control" type="text" [formControl]="form.controls['description']">
+						</div>
+						<label for="example-email-input" class="col-2 col-form-label">
+							حالة الطلب </label>
+						<div class="col-4">
+							<select class="form-control" [formControl]="form.controls['globalItemId']">
+								<option [ngValue]="null"> </option>
+								<option *ngFor="let status of orderStatuslist" [ngValue]="status.globalItemId">
+									{{status.description}}
+								</option>
+							</select>
+						</div>
+					</div>
+
+					<div class="form-group row">
+
+						<label for="example-email-input" class="col-2 col-form-label">
+							الى </label>
+						<div class="col-4">
+							<select class="form-control" [formControl]="form.controls['toPartyId']">
+								<option [ngValue]="null"> </option>
+								<option *ngFor="let party of toPartyList" [ngValue]="party[0]">{{party[1]}}</option>
+							</select>
+
+						</div>
+						<input class="form-control" hidden="true" type="text" [formControl]="form.controls['fromPartyId']" id="example-email-input">
+
+						<label for="example-email-input" class="col-2 col-form-label">
+							تاريخ الطلب </label>
+						<div class="col-4">
+							<input class="form-control" type="date" [formControl]="form.controls['orderDate']" id="example-email-input">
+
+
+						</div>
+
+					</div>
+					<div class="form-group row">
+						<div class="col-12">
+							<button class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow" type="submit">
+								بحث
+							</button>
+
+						</div>
+					</div>
+
+				</form>
+			</div>
+
+			<div class="form-group row">
+				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 mb-2" widget>
+					<div class="silk-card-content widget-body">
+						<ngx-table [configuration]="configurationAdvanced" [data]="ordersList" [columns]="columns">
+							<ng-template let-order>
+								<td scope="row">
+									<span class="spanWidth">
+										<a routerLink="/order/update-order" (click)="view(order)">{{order.orderId}} </a>
+									</span>
+								</td>
+								<td>{{order.name}}</td>
+								<td>{{order.description}} </td>
+								<td> {{order.globalItem.description}}</td>
+								<td> {{order.toParty.partyGroup.tradeName}}</td>
+								<td> {{order.orderDate | date: 'dd/MM/yyyy'}}</td>
+								<td>{{totalPrice(order.orderItems)}}</td>
+
+								<td>
+
+									<md-icon *ngIf="order.globalItem.globalItemId != 'COMPLETED' && order.globalItem.globalItemId != 'CANCELED'" (click)="edit(order)"
+									 mdTooltip="edit">edit</md-icon>
+
+									<md-icon *ngIf="order.globalItem.globalItemId == 'CREATED'" (click)="openConfirmationDialog(order.orderId)" mdTooltip="delete">delete</md-icon>
+									<md-icon *ngIf="order.globalItem.globalItemId != 'CANCELED'  && order.globalItem.globalItemId != 'CONFIRMATION' && order.globalItem.globalItemId != 'COMPLETED' && order.globalItem.globalItemId != 'CREATED'"
+									 (click)="changeToCancel(order.orderId)" mdTooltip="cancel">cancel</md-icon>
+
+
+									<md-icon *ngIf="order.globalItem.globalItemId == 'CREATED'" (click)="changeToSent(order)" mdTooltip="send">send</md-icon>
+									<md-icon *ngIf="order.globalItem.globalItemId != 'COMPLETED' && order.globalItem.globalItemId == 'CONFIRMATION' " (click)="changeToCompleteConfirm(order.orderId)"
+									 mdTooltip="done">done</md-icon>
+									<md-icon *ngIf="order.globalItem.globalItemId == 'COMPLETED' && order.invoice.length > 0" mdTooltip="print" (click)="invoiceDetailsReport(order.invoice)">print</md-icon>
+
+									<md-icon *ngIf="order.globalItem.globalItemId == 'COMPLETED' && order.invoice.length < 1" mdTooltip="invoice" (click)="createInvoice(order.orderId)">description</md-icon>
+									<md-icon *ngIf="order.globalItem.globalItemId == 'COMPLETED'" mdTooltip="نموذج استلام" (click)="deliveryNoteReport(order.orderId)">line_style</md-icon>
+
+								</td>
+								<!-- <td> -->
+								<!-- <md-icon *ngIf="order.globalItem.globalItemId == 'COMPLETED'" mdTooltip="تفصيلي" (click)="orderDetailReport(order.orderId)" >line_style</md-icon> -->
+								<!-- <md-icon *ngIf="order.globalItem.globalItemId == 'COMPLETED'" mdTooltip="اجمالي"  (click)="orderTotalReport(order.orderId)">line_weight</md-icon> -->
+
+								<!-- </td> -->
+							</ng-template>
+						</ngx-table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+
+
+
+
+
+<!-- <table class="table table-striped" [mfData]="ordersList" #mf="mfDataTable" [mfRowsOnPage]="5">
+	<thead class="thead-default">
+		<tr>
+			<th>
+				#
+			</th>
+			<th>
+				<mfDefaultSorter by="orderId">رقم الطلب</mfDefaultSorter>
+			</th>
+			<th>
+				اسم الطلب
+			</th>
+			<th>
+				الوصف
+			</th>
+			<th>
+				حالة الطلب
+			</th>
+
+			<th>
+				الى
+			</th>
+			<th>
+				<mfDefaultSorter by="orderDate">تاريخ الطلب</mfDefaultSorter>
+			</th>
+			<th>
+				<mfDefaultSorter by="orderDate">مجموع السلع</mfDefaultSorter>
+			</th>
+			<th>
+			</th>
+			<th>
+				</th>
+		</tr> -->
+<!-- </thead>
+	<tbody >
+		<tr *ngFor="let order of mf.data; let index =index; let isOdd=odd; let isEven=even">
+			<td>{{index + 1}}</td>
+			<td scope="row">
+					<a routerLink="/order/update-order" (click)="view(order)">{{order.orderId}} </a></td>
+			<td>{{order.name}}</td>
+			<td>{{order.description}} </td>
+			<td> {{order.globalItem.description}}</td>
+			<td> {{order.toParty.partyGroup.tradeName}}</td>
+			<td> {{order.orderDate | date: 'dd/MM/yyyy'}}</td>
+			<td>{{totalPrice(order.orderItems)}}</td>
+
+			<td> -->
+<!-- <button type="button" class="btn waves-effect waves-light gradient-45deg-green-teal gradient-shadow" (click)="update(order.orderId)">
+				تعديل</button> -->
+
+<!-- <md-icon *ngIf="order.globalItem.globalItemId != 'COMPLETED' && order.globalItem.globalItemId != 'CANCELED'" (click)="edit(order)" mdTooltip="edit">edit</md-icon>
+
+				<md-icon *ngIf="order.globalItem.globalItemId == 'CREATED'" (click)="openConfirmationDialog(order.orderId)" mdTooltip="delete">delete</md-icon>
+				<md-icon *ngIf="order.globalItem.globalItemId != 'CANCELED'  && order.globalItem.globalItemId != 'CONFIRMATION' && order.globalItem.globalItemId != 'COMPLETED' && order.globalItem.globalItemId != 'CREATED'" (click)="changeToCancel(order.orderId)" mdTooltip="cancel">cancel</md-icon>
+
+				
+			   <md-icon *ngIf="order.globalItem.globalItemId == 'CREATED'" (click)="changeToSent(order)" mdTooltip="send">send</md-icon>
+				<md-icon *ngIf="order.globalItem.globalItemId != 'COMPLETED' && order.globalItem.globalItemId == 'CONFIRMATION' "  (click)="changeToCompleteConfirm(order.orderId)" mdTooltip="done">done</md-icon>
+				<md-icon *ngIf="order.globalItem.globalItemId == 'COMPLETED'" mdTooltip="print" (click)="invoice(order.orderId)">print</md-icon>
+			
+				<md-icon *ngIf="order.globalItem.globalItemId == 'COMPLETED'" mdTooltip="invoice" (click)="createInvoice(order.orderId)">description</md-icon>
+				
+			</td>
+			<td> -->
+<!-- <md-icon *ngIf="order.globalItem.globalItemId == 'COMPLETED'" mdTooltip="تفصيلي" (click)="orderDetailReport(order.orderId)" >line_style</md-icon> -->
+<!-- <md-icon *ngIf="order.globalItem.globalItemId == 'COMPLETED'" mdTooltip="اجمالي"  (click)="orderTotalReport(order.orderId)">line_weight</md-icon> -->
+<!-- <md-icon *ngIf="order.globalItem.globalItemId == 'COMPLETED'" mdTooltip="نموذج استلام"  (click)="deliveryNoteReport(order.orderId)">line_style</md-icon>
+					
+			</td>
+		</tr>
+
+
+	</tbody> -->
+<!-- <tfoot>
+		<tr>
+			<td colspan="9">
+				<mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+			</td>
+		</tr>
+	</tfoot>
+</table> -->

@@ -1,0 +1,247 @@
+<div class="silk-card border-primary">
+    <div class="silk-card">
+        <div class="silk-card-title">
+            <div class="silk-head">
+                <div class="silk-pre">
+                    <h4>تعديل فاتورة رقم {{invoiceId}}</h4>
+
+
+                    <a routerLink="/invoice/update-invoice">
+                        <button type="button"  id="header" class="btn waves-effect waves-light gradient-45deg-green-teal gradient-shadow">التفاصيل</button>
+                    </a>
+
+                    <a routerLink="/invoice/add-invoiceItem">
+                        <button type="button" id="item" class="btn waves-effect waves-light gradient-45deg-amber-amber gradient-shadow">المنتجات</button>
+                    </a>
+                    <md-divider>
+
+                    </md-divider>
+                </div>
+            </div>
+            <div class="silk-card-content">
+                <!-- <button type="button" class="btn waves-effect waves-light gradient-45deg-amber-amber gradient-shadow" >مشاهدة</button> -->
+
+
+                <form [formGroup]="form" (ngSubmit)="update()">
+
+                    <div class="form-group row">
+                        <label for="example-email-input" class="col-2 col-form-label">
+                            الوصف
+                        </label>
+                        <div class="col-4">
+                            <input class="form-control" type="text" placeholder=""  [formControl]="form.controls['description']" id="example-email-input">
+                            <small class="silk-block" *ngIf="form.controls['description'].hasError('required') && form.controls['description'].touched"
+                                class="mat-text-warn">
+                            </small>
+                        </div>
+
+                        <label for="example-email-input" class="col-2 col-form-label">
+                            رقم الدفع
+                        </label>
+                        <div class="col-4">
+                            <input class="form-control" type="text" placeholder="" [formControl]="form.controls['paidNumber']" id="example-email-input">
+                            
+                        </div>
+                    </div>
+                    <!-- <div class="form-group row">
+                        <label for="example-email-input" class="col-2 col-form-label">
+                            نوع الفاتورة </label>
+                        <div class="col-4">
+                            <select class="form-control" [formControl]="form.controls['invoiceTypeId']">
+                                <option *ngFor="let item of invoiceTypelist" [ngValue]="item.globalItemId">{{item.description}}</option>
+                            </select>
+                            <small class="silk-block" *ngIf="form.controls['invoiceTypeId'].hasError('required') && form.controls['invoiceTypeId'].touched" class="mat-text-warn">
+                            </small>
+                        </div>
+
+                    </div> -->
+                    <div class="form-group row">
+
+                        <label for="example-email-input" class="col-2 col-form-label">
+                            تاريخ الفاتورة</label>
+                        <div class="col-4">
+                            <input class="form-control" type="date" [ngModel]="invoiceDate | date:'yyyy-MM-dd'"  [formControl]="form.controls['invoiceDate']" placeholder="تاريخ الفاتورة" id="example-email-input" (change)="dueDateValidation()">
+                            <small class="silk-block" *ngIf="form.controls['invoiceDate'].hasError('required') && form.controls['invoiceDate'].touched"
+                                class="mat-text-warn">
+                            </small>
+                            <small class="silk-block" *ngIf="form.controls['invoiceDate'].errors && !(form.controls['invoiceDate'].hasError('required')) && form.controls['date'].touched"
+                                class="mat-text-warn">
+                            </small>
+                        </div>
+                        <label for="example-email-input" class="col-2 col-form-label">
+                            تاريخ الاستحقاق</label>
+                        <div class="col-4">
+                            <input class="form-control" type="date" [ngModel]="dueDate | date:'yyyy-MM-dd'" [formControl]="form.controls['dueDate']" id="example-email-input" (change)="dueDateValidation()">
+                            <small class="silk-block" *ngIf="form.controls['dueDate'].hasError('required') && form.controls['dueDate'].touched" class="mat-text-warn">
+                            </small>
+                            <small class="silk-block" *ngIf="form.controls['dueDate'].errors && !(form.controls['dueDate'].hasError('required')) && form.controls['date'].touched"
+                                class="mat-text-warn">
+                            </small>
+
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+
+
+                        <label for="example-email-input" class="col-2 col-form-label">
+                            رقم المرجع</label>
+                        <div class="col-4">
+                            <input class="form-control" type="text" placeholder="" [formControl]="form.controls['referenceNumber']" id="example-email-input">
+                            <small class="silk-block" *ngIf="form.controls['referenceNumber'].hasError('required') && form.controls['referenceNumber'].touched"
+                            class="mat-text-warn">
+                        </small>
+
+                        </div>
+                        <label for="example-email-input" class="col-2 col-form-label">
+                            رقم الطلب</label>
+                        <div class="col-4">
+                            <input class="form-control" type="text" [formControl]="form.controls['orderId']" placeholder="" id="example-email-input"
+                                disabled="true">
+
+
+
+                        </div>
+
+                    </div>
+
+
+
+
+                    <div class="form-group row">
+                        <label for="example-text-input" class="col-2 col-form-label">الى طرف</label>
+                        <div class="col-2">
+                            <label>
+                                <input name="toPartyType" [formControl]="form.controls['radioPartyto']" [(ngModel)]="partyTo" 
+                                    type="radio" [value]='false' (change)="toPartyValidation()" /> طرف معرف</label>
+                        </div>
+                        <div class="col-2">
+                          
+                            <label>
+                                <input name="toPartyType" type="radio" [value]="true" [formControl]="form.controls['radioToName']" [(ngModel)]="partyTo"
+                                     (change)="toNameValidation()" /> طرف غير معرف</label>
+                        </div>
+                       
+                    </div>
+                    <div class="form-group row" *ngIf="!partyTo">
+                        <label for="example-email-input" class="col-2 col-form-label">
+                            الى </label>
+                        <div class="col-4">
+                            <select class="form-control" [formControl]="form.controls['partyIdTo']">
+                                <option *ngFor="let party of favPartyList" [ngValue]="party.partyId">{{party.name}}</option>
+                            </select>
+                            <small class="silk-block" *ngIf="form.controls['partyIdTo'].hasError('required') && form.controls['partyIdTo'].touched" class="mat-text-warn">
+                            </small>
+                        </div>
+
+                    </div>
+
+                    <div class="form-group row" *ngIf="partyTo">
+                        <label for="example-email-input" class="col-2 col-form-label">
+                            الى العميل الزبون</label>
+                        <div class="col-4">
+                            <input class="form-control" id="example-email-input" type="text" [formControl]="form.controls['toName']" />
+                            <small class="silk-block" *ngIf="form.controls['toName'].hasError('required') && form.controls['toName'].touched" class="mat-text-warn">
+                            </small>
+                        </div>
+                    </div>
+
+
+
+                    <div class="form-group row" *ngIf="partyTo">
+
+                        <label for="example-email-input" class="col-2 col-form-label">
+                            البريد الالكتروني</label>
+                        <div class="col-4">
+                            <input class="form-control" type="text"  [formControl]="form.controls['email']" id="example-email-input">
+                            <small class="silk-block" *ngIf="form.controls['email'].hasError('required') && form.controls['email'].touched" class="mat-text-warn">
+                            </small>
+
+                            <small class="silk-block" *ngIf="form.controls['email'].errors  && form.controls['email'].touched" class="mat-text-warn">
+                            </small>
+                        </div>
+
+                        <label for="example-email-input" class="col-2 col-form-label">
+                            رقم الهاتف</label>
+                        <div class="col-4">
+                            <input class="form-control" type="text" [formControl]="form.controls['mobileNumber']"  id="example-email-input">
+                            <small class="silk-block" *ngIf="form.controls['mobileNumber'].hasError('required') && form.controls['mobileNumber'].touched"
+                                class="mat-text-warn">
+                                You must include phone number.
+                            </small>
+                            <small class="silk-block" *ngIf="form.controls['mobileNumber'].hasError('pattern') && form.controls['mobileNumber'].touched"
+                                class="mat-text-warn">
+                            </small>
+
+                        </div>
+
+                    </div>
+                    <div class="form-group row">
+
+                        <label for="example-text-input" class="col-2 col-form-label">طريقة الدفع</label>
+                        <div class="col-2">
+                            <label>
+                                <input name="partyGroupType" type="radio" [formControl]="form.controls['paymentWay']" [(ngModel)]="option" [checked]="!option"
+                                    [value]="false" (change)="isTotalyValidation()" /> الدفع الكلي</label>
+
+                        </div>
+                        <div class="col-2">
+                            <label>
+                                <input name="partyGroupType" type="radio" [formControl]="form.controls['paymentWay']" [(ngModel)]="option" [checked]="option"
+                                    [value]="true" (change)="isPartiallyValidation()" /> الدفع الجزئي</label>
+                        </div>
+
+                    </div>
+                    <div class="form-group row" *ngIf="option">
+
+                        <label for="example-email-input" class="col-2 col-form-label">
+                            الحد الأدنى المسموح</label>
+                        <div class="col-4">
+                            <input class="form-control" type="text" [formControl]="form.controls['minimumAmountAllowed']" id="example-email-input">
+                            <small class="silk-block" *ngIf="form.controls['minimumAmountAllowed'].hasError('required') && form.controls['minimumAmountAllowed'].touched"
+                                class="mat-text-warn">
+                            </small>
+                        </div>
+
+                        <label for="example-email-input" class="col-2 col-form-label">
+                            الحد الأعلى المسموح</label>
+                        <div class="col-4">
+                            <input class="form-control" type="text" [formControl]="form.controls['maximumAmountAllowed']" id="example-email-input">
+                            <small class="silk-block" *ngIf="form.controls['maximumAmountAllowed'].hasError('required') && form.controls['maximumAmountAllowed'].touched"
+                                class="mat-text-warn">
+                            </small>
+
+                        </div>
+
+                    </div>
+
+
+                    <div class="form-group row">
+
+
+
+                        <input class="form-control" hidden="true" [formControl]="form.controls['userLoginId']" type="text">
+                        <input class="form-control" hidden="true"  [formControl]="form.controls['fromPartyId']" type="text"
+                            id="example-email-input">
+                        <input class="form-control"   hidden="true" [formControl]="form.controls['statusId']" type="text" 
+                            id="example-email-input">
+                        <input class="form-control"  hidden="true" [formControl]="form.controls['invoiceId']" type="text">
+                        <input class="form-control"  hidden="true"  [formControl]="form.controls['invoiceTypeId']" type="text">
+                        <input class="form-control" hidden="true" [formControl]="form.controls['isPartially']" type="text">
+                    </div>
+
+                    <div class="form-group row">
+                        <div class="col-12">
+                            <input class="waves-effect waves-light btn gradient-45deg-light-blue-cyan box-shadow" type="submit"  [disabled]="!form.valid" 
+                                value="تعديل">
+
+
+                        </div>
+                    </div>
+
+                </form>
+            </div>
+
+        </div>
+    </div>
+</div>

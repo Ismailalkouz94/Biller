@@ -1,0 +1,14 @@
+:host {
+    display: block;
+    .treeview-item {
+        white-space: nowrap;
+        .treeview-item {
+            margin-left: 2rem;
+        }
+    }
+}
+
+
+div[_ngcontent-c8] {
+    margin-right: 15px;
+}
